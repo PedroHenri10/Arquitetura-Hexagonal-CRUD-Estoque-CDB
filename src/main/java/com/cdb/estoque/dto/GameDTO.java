@@ -21,11 +21,43 @@ public class GameDTO {
         this.stock = stock;
     }
 
-    public GameDTO(Game game) {
-        this.id = game.getId();
-        this.titleGame = game.getTitleGame();
-        this.plataform = game.getPlataform();
-        this.price = game.getPrice();
-        this.stock = game.getStock();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitleGame() {
+        return titleGame;
+    }
+
+    public void setTitleGame(String titleGame) {
+        this.titleGame = titleGame;
+    }
+
+    public String getPlataform() {
+        return plataform;
+    }
+
+    public void setPlataform(String plataform) {
+        this.plataform = plataform;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }
