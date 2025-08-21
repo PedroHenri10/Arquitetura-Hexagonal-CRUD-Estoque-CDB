@@ -1,12 +1,23 @@
 package com.cdb.estoque.dto;
 
 import com.cdb.estoque.entity.Game;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class GameDTO {
     private Long id;
+
+    @NotBlank(message = "O nome do jogo é obrigatório")
     private String titleGame;
+
+    @NotBlank(message = "A plataforma é obtigatória")
     private String plataform;
+
+    @Positive(message = "O preço deve ser positivo")
     private Double price;
+
+    @PositiveOrZero(message = "O estoque não pode ser negativo")
     private Integer stock;
 
     public GameDTO(){

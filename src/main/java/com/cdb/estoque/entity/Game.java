@@ -2,9 +2,6 @@ package com.cdb.estoque.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "games")
@@ -14,16 +11,12 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome do jogo é obrigatório")
     private String titleGame;
 
-    @NotBlank(message = "A plataforma é obtigatória")
     private String plataform;
 
-    @Positive(message = "O preço deve ser positivo")
     private Double price;
 
-    @PositiveOrZero(message = "O estoque não pode ser negativo")
     private Integer stock;
 
     public Game(){
