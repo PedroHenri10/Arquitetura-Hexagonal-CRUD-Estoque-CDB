@@ -2,6 +2,7 @@ package com.cdb.estoque.service;
 
 import com.cdb.estoque.dto.GameDTO;
 import com.cdb.estoque.entity.Game;
+import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,5 +47,16 @@ public class GameService {
         return convertToDTO(repository.save(game));
     }
 
-    public
+    public GameDTO update(Long id, GameDTO dto){
+        Game game = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+
+        game.setTitleGame(dto.getTitleGame());
+        game.setPlataform(dto.getPlataform());
+        game.setStock(dto.getStock());
+        game.setPrice(dto.getPrice());
+
+        return convertToDTO(repository.save(game));
+    }
+
+    
 }
