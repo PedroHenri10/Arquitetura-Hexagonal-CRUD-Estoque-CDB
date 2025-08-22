@@ -37,5 +37,7 @@ public class GameService {
         return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    
+    public GameDTO findById(Long id){
+        return repository.findById(id).map(this::convertToDTO).orElseThrow(()-> new RuntimeException("Game not found"));
+    }
 }
