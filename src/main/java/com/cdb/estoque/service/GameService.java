@@ -7,6 +7,7 @@ import com.cdb.estoque.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameService {
@@ -58,5 +59,37 @@ public class GameService {
         return convertToDTO(repository.save(game));
     }
 
-    
+    public Optional<GameDTO> increaseDTO(Long id, int quantity){
+        Optional<Game> optGame = repository.findById(id);
+        if (optGame.isPresent()){
+            Game game = optGame.get();
+            game.setStock(game.getStock() + quantity);
+            repository.save(game);
+            return Optional.of(convertToDTO(game));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GameDTO> decreaseStock(Long id, int quantity) {
+        Optional<Game> optGame = repository.findById(id);
+        if (optGame.isPresent()) {
+            Game game = optGame.get();
+
+            if (game.getStock() >= quantity) {
+                game.setStock(game.getStock() - quantity);
+                repository.save(game);
+                return Optional.of(convertToDTO(game));
+            } else {
+                throw new IllegalArgumentException("Not enough stock available.");
+            }
+        }
+            return Optional.empty();
+    }
+
+    public void delete(Long id){
+        if(!repository.existsById(id)){
+            throw new ResourceNotFoundException("Game not found");
+        }
+        repository.deleteById(id);
+    }
 }
