@@ -40,4 +40,11 @@ public class GameService {
     public GameDTO findById(Long id){
         return repository.findById(id).map(this::convertToDTO).orElseThrow(()-> new RuntimeException("Game not found"));
     }
+
+    public GameDTO save(GameDTO dto){
+        Game game = convertToEntity(dto);
+        return convertToDTO(repository.save(game));
+    }
+
+    public
 }
