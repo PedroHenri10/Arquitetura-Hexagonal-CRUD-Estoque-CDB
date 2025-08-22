@@ -5,6 +5,9 @@ import com.cdb.estoque.entity.Game;
 import com.cdb.estoque.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class GameService {
 
     @Autowired
@@ -29,4 +32,10 @@ public class GameService {
         game.setStock(dto.getStock());
         return game;
     }
+
+    public List<GameDTO> listAll(){
+        return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    
 }
