@@ -38,11 +38,9 @@ public class GameController {
         return ResponseEntity.ok(gameService.update(id, dto));
     }
 
-    @PutMapping("/{id}/increase")
-    public ResponseEntity<GameDTO> increaseStock(@PathVariable Long id, @RequestParam int quantity) {
-        return gameService.increaseStock(id, quantity)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping("/{id}/increase-stock")
+    public GameDTO increaseStock(@PathVariable Long id, @RequestParam int quantity) {
+        return gameService.increaseStock(id, quantity);
     }
 
     @PutMapping("/{id}/decrease")

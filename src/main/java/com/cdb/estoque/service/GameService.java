@@ -4,6 +4,7 @@ import com.cdb.estoque.dto.GameDTO;
 import com.cdb.estoque.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.repository.GameRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,15 +62,15 @@ public class GameService {
         return convertToDTO(repository.save(game));
     }
 
-    public Optional<GameDTO> increaseStock(Long id, int quantity){
-        Optional<Game> optGame = repository.findById(id);
-        if (optGame.isPresent()){
-            Game game = optGame.get();
-            game.setStock(game.getStock() + quantity);
-            repository.save(game);
-            return Optional.of(convertToDTO(game));
-        }
-        return Optional.empty();
+    @Transactional
+    public GameDTO increaseStock(Long id, int quantity) {
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
+        return repository.findById(id)
+                .map(game -> {
+                    game.setStock(game.getStock() + quantity);
+                    return convertToDTO(repository.save(game));
+                })
+                .orElseThrow(() -> new RuntimeException("Game not found"));
     }
 
     public Optional<GameDTO> decreaseStock(Long id, int quantity) {
