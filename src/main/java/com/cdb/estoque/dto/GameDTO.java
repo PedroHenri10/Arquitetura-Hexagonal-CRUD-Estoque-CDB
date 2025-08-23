@@ -14,6 +14,8 @@ public class GameDTO {
     @NotBlank(message = "A plataforma é obtigatória")
     private String plataform;
 
+    private String genre;
+
     @Positive(message = "O preço deve ser positivo")
     private Double price;
 
@@ -24,10 +26,11 @@ public class GameDTO {
 
     }
 
-    public GameDTO(Long id, String titleGame, String plataform, Double price, Integer stock) {
+    public GameDTO(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
         this.id = id;
         this.titleGame = titleGame;
         this.plataform = plataform;
+        this.genre = genre;
         this.price = price;
         this.stock = stock;
     }
@@ -54,6 +57,12 @@ public class GameDTO {
 
     public void setPlataform(String plataform) {
         this.plataform = plataform;
+    }
+
+    public String getGenre() {return genre;}
+
+    public void setGenre(String genre){
+        this.genre = genre;
     }
 
     public Double getPrice() {

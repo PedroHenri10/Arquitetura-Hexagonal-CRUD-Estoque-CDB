@@ -23,6 +23,7 @@ public class GameService {
                 game.getId(),
                 game.getTitleGame(),
                 game.getPlataform(),
+                game.getGenre(),
                 game.getPrice(),
                 game.getStock()
         );
@@ -33,6 +34,7 @@ public class GameService {
         game.setId(dto.getId());
         game.setTitleGame(dto.getTitleGame());
         game.setPlataform(dto.getPlataform());
+        game.setGenre(dto.getGenre());
         game.setPrice(dto.getPrice());
         game.setStock(dto.getStock());
         return game;
@@ -56,6 +58,7 @@ public class GameService {
 
         game.setTitleGame(dto.getTitleGame());
         game.setPlataform(dto.getPlataform());
+        game.setGenre(dto.getGenre());
         game.setStock(dto.getStock());
         game.setPrice(dto.getPrice());
 

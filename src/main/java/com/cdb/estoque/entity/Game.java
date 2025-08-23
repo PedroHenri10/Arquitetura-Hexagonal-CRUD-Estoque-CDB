@@ -15,6 +15,8 @@ public class Game {
 
     private String plataform;
 
+    private String genre;
+
     private Double price;
 
     private Integer stock;
@@ -47,6 +49,12 @@ public class Game {
         this.plataform = plataform;
     }
 
+    public String getGenre() {return genre;}
+
+    public void setGenre(String genre){
+        this.genre = genre;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -63,10 +71,11 @@ public class Game {
         this.stock = stock;
     }
 
-    public Game(Long id, String titleGame, String plataform, Double price, Integer stock) {
+    public Game(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
         this.id = id;
         this.titleGame = titleGame;
         this.plataform = plataform;
+        this.genre = genre;
         this.price = price;
         this.stock = stock;
     }
