@@ -20,6 +20,13 @@ public class GameController {
         return gameService.listAll();
     }
 
+    /*@GetMapping("/{id}")
+    public ResponseEntity<GameDTO> getGameById(@PathVariable Long id) {
+        return gameService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }*/
+
     @PostMapping
     public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO dto) {
         return ResponseEntity.ok(gameService.save(dto));
