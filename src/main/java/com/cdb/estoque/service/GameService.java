@@ -73,20 +73,18 @@ public class GameService {
                 .orElseThrow(() -> new RuntimeException("Game not found"));
     }
 
-    public Optional<GameDTO> decreaseStock(Long id, int quantity) {
-        Optional<Game> optGame = repository.findById(id);
-        if (optGame.isPresent()) {
-            Game game = optGame.get();
-
-            if (game.getStock() >= quantity) {
-                game.setStock(game.getStock() - quantity);
-                repository.save(game);
-                return Optional.of(convertToDTO(game));
-            } else {
-                throw new IllegalArgumentException("Not enough stock available.");
-            }
-        }
-            return Optional.empty();
+    @Transactional
+    public GameDTO decreaseStock(Long id, int quantity) {
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
+        return repository.findById(id)
+                .map(game -> {
+                    if (game.getStock() < quantity) {
+                        throw new IllegalArgumentException("Not enough stock.");
+                    }
+                    game.setStock(game.getStock() - quantity);
+                    return convertToDTO(repository.save(game));
+                })
+                .orElseThrow(() -> new RuntimeException("Game not found"));
     }
 
     public void delete(Long id){
