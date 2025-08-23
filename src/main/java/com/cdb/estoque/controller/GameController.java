@@ -31,5 +31,17 @@ public class GameController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}/decrease")
+    public ResponseEntity<GameDTO> decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
+        try {
+            return gameService.decreaseStock(id, quantity)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 }
 
