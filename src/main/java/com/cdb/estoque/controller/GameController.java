@@ -2,6 +2,7 @@ package com.cdb.estoque.controller;
 
 import com.cdb.estoque.dto.GameDTO;
 import com.cdb.estoque.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class GameController {
     @PostMapping
     public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO dto) {
         return ResponseEntity.ok(gameService.save(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GameDTO> update(@PathVariable Long id, @Valid @RequestBody GameDTO dto) {
+        return ResponseEntity.ok(gameService.update(id, dto));
     }
 
     @PutMapping("/{id}/increase")
