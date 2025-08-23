@@ -30,7 +30,8 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO dto) {
-        return ResponseEntity.ok(gameService.save(dto));
+        GameDTO savedDto = gameService.save(dto);
+        return ResponseEntity.status(201).body(savedDto);
     }
 
     @PutMapping("/{id}")
