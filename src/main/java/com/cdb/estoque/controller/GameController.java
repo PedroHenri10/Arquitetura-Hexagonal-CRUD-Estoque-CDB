@@ -24,5 +24,12 @@ public class GameController {
     public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO dto) {
         return ResponseEntity.ok(gameService.save(dto));
     }
+
+    @PutMapping("/{id}/increase")
+    public ResponseEntity<GameDTO> increaseStock(@PathVariable Long id, @RequestParam int quantity) {
+        return gameService.increaseStock(id, quantity)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
 

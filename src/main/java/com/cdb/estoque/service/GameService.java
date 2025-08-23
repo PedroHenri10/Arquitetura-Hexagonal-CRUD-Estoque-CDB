@@ -59,7 +59,7 @@ public class GameService {
         return convertToDTO(repository.save(game));
     }
 
-    public Optional<GameDTO> increaseDTO(Long id, int quantity){
+    public Optional<GameDTO> increaseStock(Long id, int quantity){
         Optional<Game> optGame = repository.findById(id);
         if (optGame.isPresent()){
             Game game = optGame.get();
