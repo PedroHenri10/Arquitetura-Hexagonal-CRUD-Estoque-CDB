@@ -43,5 +43,9 @@ public class GameController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
+        gameService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
-
