@@ -1,6 +1,5 @@
-package com.cdb.estoque.dto;
+package com.cdb.estoque.adapter.input.dto;
 
-import com.cdb.estoque.entity.Game;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;

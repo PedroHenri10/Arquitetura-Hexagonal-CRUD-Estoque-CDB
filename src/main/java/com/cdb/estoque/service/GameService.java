@@ -1,6 +1,6 @@
 package com.cdb.estoque.service;
 
-import com.cdb.estoque.dto.GameDTO;
+import com.cdb.estoque.adapter.input.dto.GameDTO;
 import com.cdb.estoque.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.repository.GameRepository;
