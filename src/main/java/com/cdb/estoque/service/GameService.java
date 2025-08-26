@@ -1,9 +1,9 @@
 package com.cdb.estoque.service;
 
 import com.cdb.estoque.adapter.input.dto.GameDTO;
-import com.cdb.estoque.output.repository.entity.Game;
+import com.cdb.estoque.adapter.output.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
-import com.cdb.estoque.output.repository.repository.GameRepository;
+import com.cdb.estoque.adapter.output.repository.GameRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

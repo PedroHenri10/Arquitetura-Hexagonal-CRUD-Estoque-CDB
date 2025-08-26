@@ -1,4 +1,4 @@
-package com.cdb.estoque.output.repository.entity;
+package com.cdb.estoque.adapter.output.entity;
 
 
 import jakarta.persistence.*;
