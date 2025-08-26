@@ -1,7 +1,7 @@
 package com.cdb.estoque.adapter.input.controller;
 
 import com.cdb.estoque.adapter.input.dto.GameDTO;
-import com.cdb.estoque.service.GameService;
+import com.cdb.estoque.core.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

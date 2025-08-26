@@ -1,4 +1,4 @@
-package com.cdb.estoque.service;
+package com.cdb.estoque.core.service;
 
 import com.cdb.estoque.adapter.input.dto.GameDTO;
 import com.cdb.estoque.adapter.output.entity.Game;
