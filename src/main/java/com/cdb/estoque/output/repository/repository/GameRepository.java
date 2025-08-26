@@ -1,6 +1,6 @@
-package com.cdb.estoque.repository;
+package com.cdb.estoque.output.repository.repository;
 
-import com.cdb.estoque.entity.Game;
+import com.cdb.estoque.output.repository.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
