@@ -6,5 +6,7 @@ public interface GameInputPort {
     Optional<Game> findById(long id);
     Game save (Game game);
     Game update(Long id, Game game);
+    Game increaseStock(Long id, int quantity);
+    Game decreaseStock(Long id, int quantity);
     void deleteById(Long id);
 }
