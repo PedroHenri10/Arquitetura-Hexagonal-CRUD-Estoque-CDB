@@ -1,6 +1,6 @@
-package com.cdb.estoque.core.service;
+package com.cdb.estoque.core.userCase;
 
-import com.cdb.estoque.adapter.input.dto.GameDTO;
+import com.cdb.estoque.adapter.input.request.GameDTO;
 import com.cdb.estoque.adapter.output.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.adapter.output.repository.GameRepository;
@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class GameService {
+public class GameUserCase {
 
     @Autowired
     private GameRepository repository;

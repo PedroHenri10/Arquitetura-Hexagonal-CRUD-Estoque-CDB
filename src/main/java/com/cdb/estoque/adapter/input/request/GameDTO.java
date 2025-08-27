@@ -1,4 +1,4 @@
-package com.cdb.estoque.adapter.input.dto;
+package com.cdb.estoque.adapter.input.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

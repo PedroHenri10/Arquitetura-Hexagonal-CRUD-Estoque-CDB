@@ -1,7 +1,7 @@
 package com.cdb.estoque.adapter.input.controller;
 
-import com.cdb.estoque.adapter.input.dto.GameDTO;
-import com.cdb.estoque.core.service.GameService;
+import com.cdb.estoque.adapter.input.request.GameDTO;
+import com.cdb.estoque.core.userCase.GameUserCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 public class GameController {
 
     @Autowired
-    private GameService gameService;
+    private GameUserCase gameService;
 
     @GetMapping
     public List<GameDTO> getAllGames(){
