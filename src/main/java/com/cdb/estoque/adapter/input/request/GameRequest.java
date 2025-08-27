@@ -1,32 +1,35 @@
 package com.cdb.estoque.adapter.input.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import java.util.Objects;
 
 public class GameRequest {
-    private Long id;
 
-    @NotBlank(message = "O nome do jogo é obrigatório")
+    @NotBlank(message = "O título do jogo é obrigatório.")
+    @Size(min = 2, max = 100, message = "O título deve ter entre 2 e 100 caracteres.")
     private String titleGame;
 
-    @NotBlank(message = "A plataforma é obtigatória")
+    @NotBlank(message = "A plataforma é obrigatória.")
+    @Size(max = 50, message = "A plataforma não deve exceder 50 caracteres.")
     private String plataform;
 
+    @Size(max = 50, message = "O gênero não deve exceder 50 caracteres.")
     private String genre;
 
-    @Positive(message = "O preço deve ser positivo")
+    @NotNull(message = "O preço é obrigatório.")
+    @Positive(message = "O preço deve ser um valor positivo.")
     private Double price;
 
-    @PositiveOrZero(message = "O estoque não pode ser negativo")
+    @NotNull(message = "O estoque é obrigatório.")
+    @PositiveOrZero(message = "O estoque não pode ser um número negativo.")
     private Integer stock;
 
-    public GameRequest(){
-
-    }
-
-    public GameRequest(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
-        this.id = id;
+    public GameRequest(String titleGame, String plataform, String genre, Double price, Integer stock) {
         this.titleGame = titleGame;
         this.plataform = plataform;
         this.genre = genre;
@@ -34,49 +37,20 @@ public class GameRequest {
         this.stock = stock;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public String getTitleGame() { return titleGame; }
+    public String getPlataform() { return plataform; }
+    public String getGenre() { return genre; }
+    public Double getPrice() { return price; }
+    public Integer getStock() { return stock; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitleGame() {
-        return titleGame;
-    }
-
-    public void setTitleGame(String titleGame) {
-        this.titleGame = titleGame;
-    }
-
-    public String getPlataform() {
-        return plataform;
-    }
-
-    public void setPlataform(String plataform) {
-        this.plataform = plataform;
-    }
-
-    public String getGenre() {return genre;}
-
-    public void setGenre(String genre){
-        this.genre = genre;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    @Override
+    public String toString() {
+        return "GameRequest[" +
+                "titleGame='" + titleGame + '\'' +
+                ", plataform='" + plataform + '\'' +
+                ", genre='" + genre + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ']';
     }
 }
