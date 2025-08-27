@@ -1,6 +1,6 @@
 package com.cdb.estoque.adapter.input.controller;
 
-import com.cdb.estoque.adapter.input.request.GameDTO;
+import com.cdb.estoque.adapter.input.request.GameRequest;
 import com.cdb.estoque.core.userCase.GameUserCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,35 +17,35 @@ public class GameController {
     private GameUserCase gameService;
 
     @GetMapping
-    public List<GameDTO> getAllGames(){
+    public List<GameRequest> getAllGames(){
         return gameService.listAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GameDTO> getGameById(@PathVariable Long id) {
+    public ResponseEntity<GameRequest> getGameById(@PathVariable Long id) {
         return gameService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO dto) {
-        GameDTO savedDto = gameService.save(dto);
+    public ResponseEntity<GameRequest> createGame(@RequestBody GameRequest dto) {
+        GameRequest savedDto = gameService.save(dto);
         return ResponseEntity.status(201).body(savedDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameDTO> update(@PathVariable Long id, @Valid @RequestBody GameDTO dto) {
+    public ResponseEntity<GameRequest> update(@PathVariable Long id, @Valid @RequestBody GameRequest dto) {
         return ResponseEntity.ok(gameService.update(id, dto));
     }
 
     @PostMapping("/{id}/increase-stock")
-    public GameDTO increaseStock(@PathVariable Long id, @RequestParam int quantity) {
+    public GameRequest increaseStock(@PathVariable Long id, @RequestParam int quantity) {
         return gameService.increaseStock(id, quantity);
     }
 
     @PostMapping("/{id}/decrease-stock")
-    public GameDTO decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
+    public GameRequest decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
         return gameService.decreaseStock(id, quantity);
     }
 

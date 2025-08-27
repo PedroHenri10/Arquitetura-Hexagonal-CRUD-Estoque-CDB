@@ -1,6 +1,6 @@
 package com.cdb.estoque.core.userCase;
 
-import com.cdb.estoque.adapter.input.request.GameDTO;
+import com.cdb.estoque.adapter.input.request.GameRequest;
 import com.cdb.estoque.adapter.output.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.adapter.output.repository.GameRepository;
@@ -18,8 +18,8 @@ public class GameUserCase {
     @Autowired
     private GameRepository repository;
 
-    private GameDTO convertToDTO(Game game){
-        return new GameDTO(
+    private GameRequest convertToDTO(Game game){
+        return new GameRequest(
                 game.getId(),
                 game.getTitleGame(),
                 game.getPlataform(),
@@ -29,7 +29,7 @@ public class GameUserCase {
         );
     }
 
-    private Game convertToEntity(GameDTO dto){
+    private Game convertToEntity(GameRequest dto){
         Game game = new Game();
         game.setId(dto.getId());
         game.setTitleGame(dto.getTitleGame());
@@ -40,20 +40,20 @@ public class GameUserCase {
         return game;
     }
 
-    public List<GameDTO> listAll(){
+    public List<GameRequest> listAll(){
         return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public Optional<GameDTO> findById(Long id){
+    public Optional<GameRequest> findById(Long id){
         return repository.findById(id).map(this::convertToDTO);
     }
 
-    public GameDTO save(GameDTO dto){
+    public GameRequest save(GameRequest dto){
         Game game = convertToEntity(dto);
         return convertToDTO(repository.save(game));
     }
 
-    public GameDTO update(Long id, GameDTO dto){
+    public GameRequest update(Long id, GameRequest dto){
         Game game = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
 
         game.setTitleGame(dto.getTitleGame());
@@ -66,7 +66,7 @@ public class GameUserCase {
     }
 
     @Transactional
-    public GameDTO increaseStock(Long id, int quantity) {
+    public GameRequest increaseStock(Long id, int quantity) {
         if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
         return repository.findById(id)
                 .map(game -> {
@@ -77,7 +77,7 @@ public class GameUserCase {
     }
 
     @Transactional
-    public GameDTO decreaseStock(Long id, int quantity) {
+    public GameRequest decreaseStock(Long id, int quantity) {
         if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
         return repository.findById(id)
                 .map(game -> {

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
-public class GameDTO {
+public class GameRequest {
     private Long id;
 
     @NotBlank(message = "O nome do jogo é obrigatório")
@@ -21,11 +21,11 @@ public class GameDTO {
     @PositiveOrZero(message = "O estoque não pode ser negativo")
     private Integer stock;
 
-    public GameDTO(){
+    public GameRequest(){
 
     }
 
-    public GameDTO(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
+    public GameRequest(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
         this.id = id;
         this.titleGame = titleGame;
         this.plataform = plataform;
