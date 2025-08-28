@@ -27,9 +27,11 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameRequest> getGameById(@PathVariable Long id) {
-        return gameService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return gameInputPort.findById(id)
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok);
+
+        .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
