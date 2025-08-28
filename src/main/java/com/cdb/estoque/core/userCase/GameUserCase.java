@@ -69,10 +69,12 @@ public class GameUserCase implements GameInputPort {
                 .orElseThrow(() -> new RuntimeException("Game not found"));
     }
 
-    public void delete(Long id){
-        if(!repository.existsById(id)){
+    @Override
+    @Transactional
+    public void deleteById(Long id){
+        if(!gameRepositoryPort.existsById(id)){
             throw new ResourceNotFoundException("Game not found");
         }
-        repository.deleteById(id);
+        gameRepositoryPort.deleteById(id);
     }
 }
