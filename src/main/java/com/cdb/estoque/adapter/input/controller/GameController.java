@@ -49,19 +49,21 @@ public class GameController {
         return ResponseEntity.ok(mapper.toResponse(updated game));
     }
 
-    @PostMapping("/{id}/increase-stock")
-    public GameRequest increaseStock(@PathVariable Long id, @RequestParam int quantity) {
-        return gameService.increaseStock(id, quantity);
+    @PatchMapping("/{id}/increase-stock")
+    public ResponseEntity<GameResponse> increaseStock(@PathVariable Long id, @RequestParam int quantity) {
+        var updatedGame gameInputPort.increaseStock(id, quantity);
+        return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
-    @PostMapping("/{id}/decrease-stock")
-    public GameRequest decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
-        return gameService.decreaseStock(id, quantity);
+    @PatchMapping("/{id}/decrease-stock")
+    public ResponseEntity<GameResponse> decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
+        var updatedGame gameInputPort.decreaseStock(id, quantity);
+        return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
-        gameService.delete(id);
+        gameInputPort.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
