@@ -4,6 +4,8 @@ import com.cdb.estoque.adapter.input.request.GameRequest;
 import com.cdb.estoque.adapter.output.entity.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.adapter.output.repository.GameRepository;
+import com.cdb.estoque.port.input.GameInputPort;
+import com.cdb.estoque.port.output.GameRepositoryPort;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,37 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class GameUserCase {
+@RequiredArgsConstructor
+public class GameUserCase implements GameInputPort {
 
-    @Autowired
-    private GameRepository repository;
+    private final GameRepositoryPort gameRepositoryPort;
 
-    private GameRequest convertToDTO(Game game){
-        return new GameRequest(
-                game.getId(),
-                game.getTitleGame(),
-                game.getPlataform(),
-                game.getGenre(),
-                game.getPrice(),
-                game.getStock()
-        );
-    }
-
-    private Game convertToEntity(GameRequest dto){
-        Game game = new Game();
-        game.setId(dto.getId());
-        game.setTitleGame(dto.getTitleGame());
-        game.setPlataform(dto.getPlataform());
-        game.setGenre(dto.getGenre());
-        game.setPrice(dto.getPrice());
-        game.setStock(dto.getStock());
-        return game;
-    }
-
-    public List<GameRequest> listAll(){
-        return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+    @Override
+    public List<Game> listAll(){
+        return gameRepositoryPort.findAll();
     }
 
     public Optional<GameRequest> findById(Long id){
