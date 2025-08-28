@@ -27,13 +27,13 @@ public class GameUserCase implements GameInputPort {
     }
 
     @Override
-    public Optional<GameRequest> findById(Long id){
+    public Optional<Game> findById(Long id){
         return gameRepositoryPort.findById(id);
     }
 
-    public GameRequest save(GameRequest dto){
-        Game game = convertToEntity(dto);
-        return convertToDTO(repository.save(game));
+    @Override
+    public Game save(Game game){
+        return gameRepositoryPort.save(game);
     }
 
     public GameRequest update(Long id, GameRequest dto){
