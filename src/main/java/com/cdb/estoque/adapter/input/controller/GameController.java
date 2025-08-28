@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameController {
 
-    private final GameInputPort;
+    private final GameInputPort gameInputPort;
     //private final GameRestMapper mapper;
 
     @GetMapping

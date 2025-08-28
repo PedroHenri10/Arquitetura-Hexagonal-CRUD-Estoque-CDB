@@ -1,5 +1,10 @@
 package com.cdb.estoque.core.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Game {
     private Long id;
     private String titleGame;
@@ -21,46 +26,22 @@ public class Game {
         this.stock = stock;
     }
 
-    public Long getId() {
-        return id;
+    public void increaseStock(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        this.stock += quantity;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void decreaseStock(int quantity){
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
 
-    public String getTitleGame() {
-        return titleGame;
-    }
-
-    public void setTitleGame(String titleGame) {
-        this.titleGame = titleGame;
-    }
-
-    public String getPlataform() {
-        return plataform;
-    }
-
-    public void setPlataform(String plataform) {
-        this.plataform = plataform;
-    }
-
-    public String getGenre() {return genre;}
-
-    public void setGenre(String genre){
-        this.genre = genre;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
+        if(this.stock < quantity){
+            throw new IllegalArgumentException("Not enough stock for the game");
+        }
+        this.stock -= quantity;
     }
 
 }
