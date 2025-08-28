@@ -5,6 +5,7 @@ import com.cdb.estoque.core.userCase.GameUserCase;
 import com.cdb.estoque.port.input.GameInputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +43,10 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameRequest> update(@PathVariable Long id, @Valid @RequestBody GameRequest dto) {
-        return ResponseEntity.ok(gameService.update(id, dto));
+    public ResponseEntity<GameRequest> updateGame(@PathVariable Long id, @Valid @RequestBody GameRequest game) {
+        var gameToUpdate = mapper.toDomain(request);
+        var updatedGame = gameInputPort.update(id, gameToUpdate);
+        return ResponseEntity.ok(mapper.toResponse(updated game));
     }
 
     @PostMapping("/{id}/increase-stock")
