@@ -20,8 +20,9 @@ public class GameController {
     //private final GameRestMapper mapper;
 
     @GetMapping
-    public List<GameRequest> getAllGames(){
-        return gameService.listAll();
+    public ResponseEntity<List<GameRequest>> getAllGames(){
+        List<GameResponse> allGames = gameInputPort.findAll().stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(allGames);
     }
 
     @GetMapping("/{id}")
