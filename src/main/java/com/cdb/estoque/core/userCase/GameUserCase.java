@@ -44,7 +44,12 @@ public class GameUserCase implements GameInputPort {
         return gameRepositoryPort.save(game);
     }
 
-    
+    @Transactional
+    public Game increaseStock(Long id, int quantity) {
+        Game game = gameRepositoryPort.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
+        game.increaseStock(quantity);
+        return gameRepositoryPort.save(game);
+    }
 
     @Override
     @Transactional
