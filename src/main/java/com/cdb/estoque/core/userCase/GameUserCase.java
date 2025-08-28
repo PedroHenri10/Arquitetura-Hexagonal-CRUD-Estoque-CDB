@@ -22,12 +22,13 @@ public class GameUserCase implements GameInputPort {
     private final GameRepositoryPort gameRepositoryPort;
 
     @Override
-    public List<Game> listAll(){
+    public List<Game> findAll(){
         return gameRepositoryPort.findAll();
     }
 
+    @Override
     public Optional<GameRequest> findById(Long id){
-        return repository.findById(id).map(this::convertToDTO);
+        return gameRepositoryPort.findById(id);
     }
 
     public GameRequest save(GameRequest dto){
