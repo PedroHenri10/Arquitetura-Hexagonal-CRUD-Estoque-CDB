@@ -44,29 +44,15 @@ public class GameUserCase implements GameInputPort {
         return gameRepositoryPort.save(game);
     }
 
-    @Transactional
-    public GameRequest increaseStock(Long id, int quantity) {
-        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
-        return repository.findById(id)
-                .map(game -> {
-                    game.setStock(game.getStock() + quantity);
-                    return convertToDTO(repository.save(game));
-                })
-                .orElseThrow(() -> new RuntimeException("Game not found"));
-    }
+    
 
+    @Override
     @Transactional
-    public GameRequest decreaseStock(Long id, int quantity) {
-        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive.");
-        return repository.findById(id)
-                .map(game -> {
-                    if (game.getStock() < quantity) {
-                        throw new IllegalArgumentException("Not enough stock.");
-                    }
-                    game.setStock(game.getStock() - quantity);
-                    return convertToDTO(repository.save(game));
-                })
-                .orElseThrow(() -> new RuntimeException("Game not found"));
+    public Game decreaseStock(Long id, int quantity) {
+        Game game = gameRepositoryPort.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
+        game.decreaseStock(quantity);
+        return gameRepositoryPort.save(game);
+
     }
 
     @Override

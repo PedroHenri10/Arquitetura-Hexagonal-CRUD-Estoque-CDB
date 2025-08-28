@@ -1,5 +1,10 @@
 package com.cdb.estoque.port.input;
 
+import com.cdb.estoque.core.domain.model.Game;
+
+import java.util.List;
+import java.util.Optional;
+
 public interface GameInputPort {
 
     List<Game> findAll();
