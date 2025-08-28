@@ -36,16 +36,12 @@ public class GameUserCase implements GameInputPort {
         return gameRepositoryPort.save(game);
     }
 
-    public GameRequest update(Long id, GameRequest dto){
-        Game game = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
+    @Override
+    public Game update(Long id, Game game){
+        gameRepositoryPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
 
-        game.setTitleGame(dto.getTitleGame());
-        game.setPlataform(dto.getPlataform());
-        game.setGenre(dto.getGenre());
-        game.setStock(dto.getStock());
-        game.setPrice(dto.getPrice());
-
-        return convertToDTO(repository.save(game));
+        game.setId();
+        return gameRepositoryPort.save(game);
     }
 
     @Transactional
