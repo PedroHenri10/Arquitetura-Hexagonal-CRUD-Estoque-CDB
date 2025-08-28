@@ -35,9 +35,10 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<GameRequest> createGame(@RequestBody GameRequest dto) {
-        GameRequest savedDto = gameService.save(dto);
-        return ResponseEntity.status(201).body(savedDto);
+    public ResponseEntity<GameRequest> createGame(@Valid @RequestBody GameRequest request) {
+        var gameDomain = mapper.toDomain(request);
+        var savedGame = gameInputPort.save(gameDomain);
+        return ResponseEntity.status(201).body(mapper.toResponse(savedGame));
     }
 
     @PutMapping("/{id}")
