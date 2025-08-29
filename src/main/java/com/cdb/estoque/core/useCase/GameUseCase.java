@@ -1,4 +1,4 @@
-package com.cdb.estoque.core.userCase;
+package com.cdb.estoque.core.useCase;
 
 import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class GameUserCase implements GameInputPort {
+public class GameUseCase implements GameInputPort {
 
+    @Autowired
     private final GameRepositoryPort gameRepositoryPort;
 
     @Override
