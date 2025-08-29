@@ -1,9 +1,7 @@
 package com.cdb.estoque.core.userCase;
 
-import com.cdb.estoque.adapter.input.request.GameRequest;
-import com.cdb.estoque.adapter.output.entity.Game;
+import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
-import com.cdb.estoque.adapter.output.repository.GameRepository;
 import com.cdb.estoque.port.input.GameInputPort;
 import com.cdb.estoque.port.output.GameRepositoryPort;
 import jakarta.transaction.Transactional;
@@ -40,10 +38,11 @@ public class GameUserCase implements GameInputPort {
     public Game update(Long id, Game game){
         gameRepositoryPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
 
-        game.setId();
+        game.setId(id);
         return gameRepositoryPort.save(game);
     }
 
+    @Override
     @Transactional
     public Game increaseStock(Long id, int quantity) {
         Game game = gameRepositoryPort.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
