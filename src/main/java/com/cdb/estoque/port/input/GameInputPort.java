@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface GameInputPort {
 
     List<Game> findAll();
-    Optional<Game> findById(long id);
+    Optional<Game> findById(Long id);
     Game save (Game game);
     Game update(Long id, Game game);
     Game increaseStock(Long id, int quantity);
