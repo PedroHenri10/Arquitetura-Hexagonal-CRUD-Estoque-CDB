@@ -47,7 +47,10 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     @Override
     public  Game update(Long id, Game game){
         game.setId(id);
-        return save(game);
+
+        GameEntity entity = mapper.toEntity(game);
+        GameEntity updatedEntity = gameRepository.save(entity);
+        return mapper.toDomain(updatedEntity);
     }
 
     @Override
