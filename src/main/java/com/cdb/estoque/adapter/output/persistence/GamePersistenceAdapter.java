@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.cdb.estoque.adapter.output.entity.GameEntity;
 import com.cdb.estoque.adapter.output.mapper.GamePersistanceMapper;
 import com.cdb.estoque.core.domain.model.Game;
+import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.port.output.GameRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
@@ -19,20 +20,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GamePersistenceAdapter implements GameRepositoryPort {
 
-    private final GameRepository gameRepository;
-    private final GamePersistenceMapper gamePersistenceMapper;
+    private final DataGameRepository dataGameRepository;
+    private final GamePersistanceMapper mapper;
 
     @Override
     public List<Game> findAll() {
 
-        List<GameEntity> allEntities = gameRepository.findAll();
+        List<GameEntity> allEntities = dataGameRepository.findAll();
         return allEntities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
     public Optional<Game> findById(Long id) {
 
-        Optional<GameEntity> entityOptional = gameRepository.findById(id);
+        Optional<GameEntity> entityOptional = dataGameRepository.findById(id);
         return entityOptional.map(mapper::toDomain);
     }
 
@@ -40,7 +41,7 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     @Override
     public Game save(Game game){
         GameEntity entity = mapper.toEntity(game);
-        GameEntity savedEntity = gameRepository.save(entity);
+        GameEntity savedEntity = dataGameRepository.save(entity);
         return mapper.toDomain(savedEntity);
     }
 
@@ -49,17 +50,17 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
         game.setId(id);
 
         GameEntity entity = mapper.toEntity(game);
-        GameEntity updatedEntity = gameRepository.save(entity);
+        GameEntity updatedEntity = dataGameRepository.save(entity);
         return mapper.toDomain(updatedEntity);
     }
 
     @Override
     public void deleteById(Long id){
-        gameRepository.deleteById(id);
+        dataGameRepository.deleteById(id);
     }
 
     @Override
     public boolean existsById(Long id){
-        return gameRepository.existsById(id);
+        return dataGameRepository.existsById(id);
     }
 }
