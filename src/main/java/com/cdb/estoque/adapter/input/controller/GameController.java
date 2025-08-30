@@ -43,10 +43,10 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameResponse> updateGame(@PathVariable Long id, @Valid @RequestBody GameRequest game) {
-        var gameToUpdate = mapper.toDomain(request);
-        var updatedGame = gameInputPort.update(id, gameToUpdate);
-        return ResponseEntity.ok(mapper.toResponse(updated game));
+    public ResponseEntity<GameResponse> update(@PathVariable Long id, @Valid @RequestBody GameRequest request) {
+        Game toUpdate = mapper.toDomain(request);
+        Game updatedGame = gameInputPort.update(id, toUpdate);
+        return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
     @PatchMapping("/{id}/increase-stock")
