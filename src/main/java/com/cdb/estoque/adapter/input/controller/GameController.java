@@ -1,7 +1,8 @@
 package com.cdb.estoque.adapter.input.controller;
 
+import com.cdb.estoque.adapter.input.mapper.GameRestMapper;
 import com.cdb.estoque.adapter.input.request.GameRequest;
-//import com.cdb.estoque.adapter.input.response.GameResponse;
+import com.cdb.estoque.adapter.input.response.GameResponse;
 import com.cdb.estoque.port.input.GameInputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/games")
@@ -16,7 +18,7 @@ import java.util.List;
 public class GameController {
 
     private final GameInputPort gameInputPort;
-    //private final GameRestMapper mapper;
+    private final GameRestMapper mapper;
 
     @GetMapping
     public ResponseEntity<List<GameRequest>> getAllGames(){
