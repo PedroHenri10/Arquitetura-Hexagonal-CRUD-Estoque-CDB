@@ -24,25 +24,22 @@ public class GameController {
     private final GameRestMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<GameResponse>> getAllGames(){
+    public ResponseEntity<List<GameResponse>> findAll(){
         List<GameResponse> allGames = gameInputPort.findAll().stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(allGames);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GameResponse> findById(@PathVariable Long id) {
-        return gameInputPort.findById(id)
-                .map(mapper::toResponse)
-                .map(ResponseEntity::ok);
-
-        .orElse(ResponseEntity.notFound().build());
+        Game game = gameInputPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("GAME NOT FOUND"));
+        return ResponseEntity.ok(mapper.toResponse(game));
     }
 
     @PostMapping
     public ResponseEntity<GameResponse> createGame(@Valid @RequestBody GameRequest request) {
        Game toSave = mapper.toDomain(request);
        Game saved = gameInputPort.save(toSave);
-        return ResponseEntity.created(URI.create("/games/" + saved.getId())).body(mapper.toResponse(savedGame));
+        return ResponseEntity.created(URI.create("/games/" + saved.getId())).body(mapper.toResponse(saved));
     }
 
     @PutMapping("/{id}")
@@ -65,7 +62,7 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         gameInputPort.deleteById(id);
         return ResponseEntity.noContent().build();
     }
