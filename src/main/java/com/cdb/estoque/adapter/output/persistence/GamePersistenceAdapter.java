@@ -19,38 +19,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GamePersistenceAdapter implements GameRepositoryPort {
 
-    private final GameJpaRepository gameJpaRepository;
+    private final GameRepository gameRepository;
     private final GamePersistenceMapper gamePersistenceMapper;
 
     @Override
     public List<Game> findAll() {
 
-        List<GameEntity> allEntities = gameJpaRepository.findAll();
+        List<GameEntity> allEntities = gameRepository.findAll();
         return allEntities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
     public Optional<Game> findById(Long id) {
 
-        Optional<GameEntity> entityOptional = gameJpaRepository.findById(id);
-        return entityOptional.map(mappper::toDomain);
+        Optional<GameEntity> entityOptional = gameRepository.findById(id);
+        return entityOptional.map(mapper::toDomain);
     }
 
 
     @Override
     public Game save(Game game){
         GameEntity entity = mapper.toEntity(game);
-        GameEntity savedEntity = gqmeJpaRepositoty.save(entity);
+        GameEntity savedEntity = gameRepository.save(entity);
         return mapper.toDomain(savedEntity);
     }
 
     @Override
+    public  Game update(Long id, Game game){
+        game.setId(id);
+        return save(game);
+    }
+
+    @Override
     public void deleteById(Long id){
-        gameJpaRepository.deleteById(id);
+        gameRepository.deleteById(id);
     }
 
     @Override
     public boolean existsById(Long id){
-        return gameJpaRepository.existsById(id);
+        return gameRepository.existsById(id);
     }
 }

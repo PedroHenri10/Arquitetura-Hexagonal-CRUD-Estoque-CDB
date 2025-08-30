@@ -4,7 +4,7 @@ import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.port.input.GameInputPort;
 import com.cdb.estoque.port.output.GameRepositoryPort;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
