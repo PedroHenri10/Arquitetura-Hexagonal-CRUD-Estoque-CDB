@@ -45,5 +45,12 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     }
 
     @Override
-    
+    public void deleteById(Long id){
+        gameJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(Long id){
+        return gameJpaRepository.existsById(id);
+    }
 }
