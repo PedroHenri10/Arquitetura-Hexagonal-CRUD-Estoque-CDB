@@ -51,13 +51,13 @@ public class GameController {
 
     @PatchMapping("/{id}/increase-stock")
     public ResponseEntity<GameResponse> increaseStock(@PathVariable Long id, @RequestParam int quantity) {
-        var updatedGame gameInputPort.increaseStock(id, quantity);
+        Game updatedGame = gameInputPort.increaseStock(id, quantity);
         return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
     @PatchMapping("/{id}/decrease-stock")
     public ResponseEntity<GameResponse> decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
-        var updatedGame gameInputPort.decreaseStock(id, quantity);
+        Game updatedGame = gameInputPort.decreaseStock(id, quantity);
         return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
