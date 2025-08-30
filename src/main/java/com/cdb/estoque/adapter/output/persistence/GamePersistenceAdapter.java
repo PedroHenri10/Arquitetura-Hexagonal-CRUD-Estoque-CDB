@@ -5,6 +5,11 @@ import com.cdb.estoque.port.output.GameRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import com.cdb.estoque.adapter.output.entity.GameEntity;
+import com.cdb.estoque.adapter.output.mapper.GamePersistanceMapper;
+import com.cdb.estoque.core.domain.model.Game;
+import com.cdb.estoque.port.output.GameRepositoryPort;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,4 +37,13 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     }
 
 
+    @Override
+    public Game save(Game game){
+        GameEntity entity = mapper.toEntity(game);
+        GameEntity savedEntity = gqmeJpaRepositoty.save(entity);
+        return mapper.toDomain(savedEntity);
+    }
+
+    @Override
+    
 }
