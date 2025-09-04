@@ -1,0 +1,12 @@
+DROP TRIGGER IF EXISTS
+trigger_controle_estoque
+
+CREATE TRIGGER trigger_controle_estoque
+    AFTER UPDATE
+    ON games
+    FOR EACH ROW
+
+    WHEN (OLD.stock IS DISTINCT FROM NEW.stock)
+
+    EXECUTE FUNCTION
+     mudanca_de_estoque();
