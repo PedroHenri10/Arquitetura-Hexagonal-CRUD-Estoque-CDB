@@ -1,0 +1,11 @@
+CREATE TABLE controle_estoque{
+id SERIAL PRIMARY KEY,
+game_id BIGINT NOT NULL,
+estoque_antigo INT,
+estoque-novo INT,
+operacao VARCHAR(10) NOT NULL,
+qtd_movimentada INT NOT NULL,
+data_modificacao TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    CONSTRAINT fk_game()
+    FOREIGN KEY(game_id)
+    REFERENCES games(id)
