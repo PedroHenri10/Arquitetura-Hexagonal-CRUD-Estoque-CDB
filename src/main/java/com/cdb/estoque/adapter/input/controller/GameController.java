@@ -68,20 +68,20 @@ public class GameController {
     }
 
     @GetMapping("/search/title")
-    public ResponseEntity<List<GameResponse>> findByTitle(@RequestParam String title){
-        List<GameResponse> games = gameInputPort.findByTitle(title).stream().map(mapper::toResponse).collect(Collectors.toList());
+    public ResponseEntity<List<GameResponse>> findByTitleContainingIgnoreCase(@RequestParam String title){
+        List<GameResponse> games = gameInputPort.findByTitleContainingIgnoreCase(title).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 
     @GetMapping("/search/genre")
-    public ResponseEntity<List<GameResponse>> findByGenre(@RequestParam String genre){
-        List<GameResponse> games = gameInputPort.findByTitle(genre).stream().map(mapper::toResponse).collect(Collectors.toList());
+    public ResponseEntity<List<GameResponse>> findByGenreContainingIgnoreCase(@RequestParam String genre){
+        List<GameResponse> games = gameInputPort.findByGenreContainingIgnoreCase(genre).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 
     @GetMapping("/search/plataform")
-    public ResponseEntity<List<GameResponse>> findByPlataform(@RequestParam String plataform){
-        List<GameResponse> games = gameInputPort.findByTitle(plataform).stream().map(mapper::toResponse).collect(Collectors.toList());
+    public ResponseEntity<List<GameResponse>> findByPlataformContainingIgnoreCase(@RequestParam String plataform){
+        List<GameResponse> games = gameInputPort.findByPlataformContainingIgnoreCase(plataform).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 }

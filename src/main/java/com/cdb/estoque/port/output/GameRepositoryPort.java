@@ -12,7 +12,7 @@ public interface GameRepositoryPort {
     Game update(Long id, Game game);
     void deleteById(Long id);
     boolean existsById(Long id);
-    List<Game> findByTitle(String gameTitle);
-    List<Game> findyByGenre(String genre);
-    List<Game> findyByPlataform(String plataform);
+    List<Game> findByTitleContainingIgnoreCase(String gameTitle);
+    List<Game> findyByGenreContainingIgnoreCase(String genre);
+    List<Game> findyByPlataformContainingIgnoreCase(String plataform);
 }

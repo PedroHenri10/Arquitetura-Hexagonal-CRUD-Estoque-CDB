@@ -50,22 +50,22 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     }
 
     @Override
-    public List<Game> findByTitle(String titleGame){
-        List<GameEntity> entities = dataGameRepository.findByTitle(titleGame);
+    public List<Game> findByTitleContainingIgnoreCase(String titleGame){
+        List<GameEntity> entities = dataGameRepository.findByTitleContainingIgnoreCase(titleGame);
 
         return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
-    public List<Game> findyByGenre(String genre){
-        List<GameEntity> entities = dataGameRepository.findByGenre(genre);
+    public List<Game> findyByGenreContainingIgnoreCase(String genre){
+        List<GameEntity> entities = dataGameRepository.findByGenreContainingIgnoreCase(genre);
 
         return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
-    public List<Game> findyByPlataform(String plataform){
-        List<GameEntity> entities = dataGameRepository.findByPlataform(plataform);
+    public List<Game> findyByPlataformContainingIgnoreCase(String plataform){
+        List<GameEntity> entities = dataGameRepository.findByPlataformContainingIgnoreCase(plataform);
 
         return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }

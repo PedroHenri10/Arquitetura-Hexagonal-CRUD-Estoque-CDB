@@ -13,8 +13,8 @@ public interface GameInputPort {
     Game update(Long id, Game game);
     Game increaseStock(Long id, int quantity);
     Game decreaseStock(Long id, int quantity);
-    List<Game> findByTitle(String titleGame);
-    List<Game> findByGenre(String genre);
-    List<Game> findByPlataform(String plataform);
+    List<Game> findByTitleContainingIgnoreCase(String titleGame);
+    List<Game> findByGenreContainingIgnoreCase(String genre);
+    List<Game> findByPlataformContainingIgnoreCase(String plataform);
     void deleteById(Long id);
 }
