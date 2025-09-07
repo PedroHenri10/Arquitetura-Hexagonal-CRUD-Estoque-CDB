@@ -61,8 +61,8 @@ public class GameUseCase implements GameInputPort {
     }
 
     @Override
-    public List<Game> findByTitleContainingIgnoreCase(String titleGame){
-        List<Game> games = gameRepositoryPort.findByTitleContainingIgnoreCase(titleGame);
+    public List<Game> findByTitleGameContainingIgnoreCase(String titleGame){
+        List<Game> games = gameRepositoryPort.findByTitleGameContainingIgnoreCase(titleGame);
         if(games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }

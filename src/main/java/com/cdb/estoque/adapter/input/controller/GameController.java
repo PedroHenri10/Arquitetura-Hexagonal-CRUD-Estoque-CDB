@@ -68,8 +68,8 @@ public class GameController {
     }
 
     @GetMapping("/search/title")
-    public ResponseEntity<List<GameResponse>> findByTitleContainingIgnoreCase(@RequestParam String title){
-        List<GameResponse> games = gameInputPort.findByTitleContainingIgnoreCase(title).stream().map(mapper::toResponse).collect(Collectors.toList());
+    public ResponseEntity<List<GameResponse>> findByTitleGameContainingIgnoreCase(@RequestParam String titleGame){
+        List<GameResponse> games = gameInputPort.findByTitleGameContainingIgnoreCase(titleGame).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 

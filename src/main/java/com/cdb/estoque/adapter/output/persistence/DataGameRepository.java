@@ -8,7 +8,7 @@ import java.util.List;
 public interface DataGameRepository extends JpaRepository<GameEntity, Long>{
 
 
-    List<GameEntity> findByTitleContainingIgnoreCase(String titleGame);
+    List<GameEntity> findByTitleGameContainingIgnoreCase(String titleGame);
     List<GameEntity> findByGenreContainingIgnoreCase(String genre);
     List<GameEntity> findByPlataformContainingIgnoreCase(String plataform);
 }
