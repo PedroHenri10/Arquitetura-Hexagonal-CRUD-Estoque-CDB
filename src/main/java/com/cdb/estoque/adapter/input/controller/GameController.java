@@ -72,4 +72,10 @@ public class GameController {
         List<GameResponse> games = gameInputPort.findByTitle(title).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
+
+    @GetMapping("/search/genre")
+    public ResponseEntity<List<GameResponse>> findByGenre(@RequestParam String genre){
+        List<GameResponse> games = gameInputPort.findByTitle(genre).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(games);
+    }
 }
