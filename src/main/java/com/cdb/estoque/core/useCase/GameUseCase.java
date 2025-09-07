@@ -79,6 +79,15 @@ public class GameUseCase implements GameInputPort {
     }
 
     @Override
+    public List<Game> findByPlataform(String plataform){
+        List<Game> games = gameRepositoryPort.findyByPlataform(plataform);
+        if(games.isEmpty()) {
+            throw new ResourceNotFoundException("Game not found");
+        }
+        return games;
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id){
         if(!gameRepositoryPort.existsById(id)){
