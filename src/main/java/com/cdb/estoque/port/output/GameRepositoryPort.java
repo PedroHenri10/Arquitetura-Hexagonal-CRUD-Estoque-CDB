@@ -13,6 +13,6 @@ public interface GameRepositoryPort {
     void deleteById(Long id);
     boolean existsById(Long id);
     List<Game> findByTitleContainingIgnoreCase(String gameTitle);
-    List<Game> findyByGenreContainingIgnoreCase(String genre);
-    List<Game> findyByPlataformContainingIgnoreCase(String plataform);
+    List<Game> findByGenreContainingIgnoreCase(String genre);
+    List<Game> findByPlataformContainingIgnoreCase(String plataform);
 }
