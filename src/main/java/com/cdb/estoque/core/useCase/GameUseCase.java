@@ -70,6 +70,15 @@ public class GameUseCase implements GameInputPort {
     }
 
     @Override
+    public List<Game> findByGenre(String genre){
+        List<Game> games = gameRepositoryPort.findyByGenre(genre);
+        if(games.isEmpty()) {
+            throw new ResourceNotFoundException("Game not found");
+        }
+        return games;
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id){
         if(!gameRepositoryPort.existsById(id)){
