@@ -3,14 +3,9 @@ package com.cdb.estoque.adapter.output.persistence;
 import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.port.output.GameRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import com.cdb.estoque.adapter.output.entity.GameEntity;
 import com.cdb.estoque.adapter.output.mapper.GamePersistanceMapper;
-import com.cdb.estoque.core.domain.model.Game;
-import com.cdb.estoque.exception.ResourceNotFoundException;
-import com.cdb.estoque.port.output.GameRepositoryPort;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,13 +57,13 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     }
 
     @Override
-    public List<Game> findByTitle(String titleGame){
-        List<GameEntity> entities = dataGameRepository.findByTitle(titleGame);
+    public List<Game> findyByGenre(String genre){
+        List<GameEntity> entities = dataGameRepository.findByGenre(genre);
 
         return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
-    
+
 
     @Override
     public void deleteById(Long id){

@@ -9,4 +9,5 @@ public interface DataGameRepository extends JpaRepository<GameEntity, Long>{
 
 
     List<GameEntity> findByTitle(String titleGame);
+    List<GameEntity> findByGenre(String genre);
 }
