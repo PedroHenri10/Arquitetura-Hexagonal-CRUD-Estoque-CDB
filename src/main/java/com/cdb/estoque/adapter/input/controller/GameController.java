@@ -66,4 +66,10 @@ public class GameController {
         gameInputPort.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search/title")
+    public ResponseEntity<List<GameResponse>> findByTitle(@RequestParam String title){
+        List<GameResponse> games = gameInputPort.findByTitle(title).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(games);
+    }
 }
