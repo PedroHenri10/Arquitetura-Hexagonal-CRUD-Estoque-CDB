@@ -61,6 +61,11 @@ public class GameUseCase implements GameInputPort {
     }
 
     @Override
+    public List<Game> findByTitle(String titleGame){
+
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id){
         if(!gameRepositoryPort.existsById(id)){
