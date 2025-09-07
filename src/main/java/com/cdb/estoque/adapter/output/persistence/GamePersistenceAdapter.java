@@ -55,6 +55,22 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
     }
 
     @Override
+    public List<Game> findByTitle(String titleGame){
+        List<GameEntity> entities = dataGameRepository.findByTitle(titleGame);
+
+        return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Game> findByTitle(String titleGame){
+        List<GameEntity> entities = dataGameRepository.findByTitle(titleGame);
+
+        return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    
+
+    @Override
     public void deleteById(Long id){
         dataGameRepository.deleteById(id);
     }
