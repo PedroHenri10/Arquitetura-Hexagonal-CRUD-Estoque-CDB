@@ -71,7 +71,7 @@ public class GameUseCase implements GameInputPort {
 
     @Override
     public List<Game> findByGenreContainingIgnoreCase(String genre){
-        List<Game> games = gameRepositoryPort.findyByGenreContainingIgnoreCase(genre);
+        List<Game> games = gameRepositoryPort.findByGenreContainingIgnoreCase(genre);
         if(games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }
@@ -80,7 +80,7 @@ public class GameUseCase implements GameInputPort {
 
     @Override
     public List<Game> findByPlataformContainingIgnoreCase(String plataform){
-        List<Game> games = gameRepositoryPort.findyByPlataformContainingIgnoreCase(plataform);
+        List<Game> games = gameRepositoryPort.findByPlataformContainingIgnoreCase(plataform);
         if(games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }
