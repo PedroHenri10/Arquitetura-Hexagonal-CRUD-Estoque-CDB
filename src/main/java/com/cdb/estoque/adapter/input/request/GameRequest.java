@@ -8,6 +8,14 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
+
+/**
+ * DTO (Data Transfer Object) de entrada para criação ou atualização de Game.
+ *
+ * 📌 Observações:
+ *  Pode usar Lombok para reduzir boilerplate (getters, construtores, toString).
+ */
+
 public class GameRequest {
 
     @NotBlank(message = "O título do jogo é obrigatório.")
