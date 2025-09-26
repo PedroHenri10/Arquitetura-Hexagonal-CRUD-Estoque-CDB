@@ -1,4 +1,4 @@
-package com.cdb.estoque;
+package com.cdb.estoque.application;
 
 import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.core.useCase.GameUseCase;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 
 
-public class GameUseCaseTest {
+class GameUseCaseTest {
 
     GameRepositoryPort repo = mock(GameRepositoryPort.class);
 
@@ -186,7 +186,7 @@ public class GameUseCaseTest {
     @Test
     void findByTitleGameContainingIgnoreCase_retornaListaQuandoEncontrado(){
         String titulo ="Jogo";
-        Game game = new Game(1L, "Jogo Teste", "PC", "Ação", 150.0, 10);
+        Game game = new Game(1L, "Jogo", "PC", "Ação", 150.0, 10);
 
         when(repo.findByTitleGameContainingIgnoreCase(titulo)).thenReturn(List.of(game));
 
@@ -194,7 +194,7 @@ public class GameUseCaseTest {
         List<Game>  resultado = gameUseCase.findByTitleGameContainingIgnoreCase(titulo);
 
         assertEquals(1, resultado.size());
-        assertEquals("Jogo Teste", resultado.get(0).getTitleGame());
+        assertEquals("Jogo", resultado.get(0).getTitleGame());
         verify(repo).findByTitleGameContainingIgnoreCase(titulo);
 
     }
@@ -212,6 +212,84 @@ public class GameUseCaseTest {
         verify(repo).findByTitleGameContainingIgnoreCase(titulo);
     }
 
+    @Test
+    void  findByGenreContainingIgnoreCase_retornaListaQuandoEncontrado(){
+        String genero ="Drama";
+        Game game = new Game(2L, "Jogo Teste", "PC", "Drama", 150.0, 10);
 
+        when(repo.findByGenreContainingIgnoreCase(genero)).thenReturn(List.of(game));
+
+        List<Game>  resultado = gameUseCase.findByGenreContainingIgnoreCase(genero);
+
+        assertEquals(1, resultado.size());
+        assertEquals("Drama", resultado.get(0).getGenre());
+        verify(repo).findByGenreContainingIgnoreCase(genero);
+
+    }
+
+    @Test
+    void findByGenreContainingIgnoreCase_exception() {
+        String genero ="Drama";
+
+        when(repo.findByGenreContainingIgnoreCase(genero))
+                .thenReturn(Collections.emptyList());
+
+        assertThatThrownBy(() -> gameUseCase.findByGenreContainingIgnoreCase(genero))
+                .isInstanceOf(ResourceNotFoundException.class);
+
+        verify(repo).findByGenreContainingIgnoreCase(genero);
+    }
+
+    @Test
+    void findByPlataformContainingIgnoreCase_retornaListaQuandoEncontrado(){
+        String plataforma = "PC";
+        Game game = new Game(2L, "Jogo Teste", "PC", "Drama", 150.0, 10);;
+
+        when(repo.findByPlataformContainingIgnoreCase(plataforma)).thenReturn(List.of(game));
+
+        List<Game>  resultado = gameUseCase.findByPlataformContainingIgnoreCase(plataforma);
+
+        assertEquals(1, resultado.size());
+        assertEquals("PC", resultado.get(0).getPlataform());
+        verify(repo).findByPlataformContainingIgnoreCase(plataforma);
+
+    }
+
+    @Test
+    void findByPlataformContainingIgnoreCase_exception() {
+        String plataforma = "PC";
+
+        when(repo.findByPlataformContainingIgnoreCase(plataforma))
+                .thenReturn(Collections.emptyList());
+
+        assertThatThrownBy(() -> gameUseCase.findByPlataformContainingIgnoreCase(plataforma))
+                .isInstanceOf(ResourceNotFoundException.class);
+
+        verify(repo).findByPlataformContainingIgnoreCase(plataforma);
+    }
+
+    @Test
+    void deleteGame_ok(){
+        Long id = 1L;
+
+        when(repo.existsById(id)).thenReturn(true);
+        doNothing().when(repo).deleteById(id);
+        gameUseCase.deleteById(id);
+        verify(repo).deleteById(id);
+
+    }
+
+    @Test
+    void deleteGame_exception(){
+        Long id = 1L;
+
+        when(repo.existsById(id)).thenReturn(false);
+
+        assertThatThrownBy(() -> gameUseCase.deleteById(id))
+                .isInstanceOf(ResourceNotFoundException.class);
+
+        verify(repo).existsById(id);
+        verify(repo, never()).deleteById(anyLong());
+    }
 
 }
