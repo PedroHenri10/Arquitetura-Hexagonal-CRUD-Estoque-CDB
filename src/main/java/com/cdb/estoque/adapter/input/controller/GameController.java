@@ -66,4 +66,22 @@ public class GameController {
         gameInputPort.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search/title")
+    public ResponseEntity<List<GameResponse>> findByTitleGameContainingIgnoreCase(@RequestParam String titleGame){
+        List<GameResponse> games = gameInputPort.findByTitleGameContainingIgnoreCase(titleGame).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(games);
+    }
+
+    @GetMapping("/search/genre")
+    public ResponseEntity<List<GameResponse>> findByGenreContainingIgnoreCase(@RequestParam String genre){
+        List<GameResponse> games = gameInputPort.findByGenreContainingIgnoreCase(genre).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(games);
+    }
+
+    @GetMapping("/search/plataform")
+    public ResponseEntity<List<GameResponse>> findByPlataformContainingIgnoreCase(@RequestParam String plataform){
+        List<GameResponse> games = gameInputPort.findByPlataformContainingIgnoreCase(plataform).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(games);
+    }
 }

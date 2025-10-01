@@ -3,6 +3,11 @@ package com.cdb.estoque.core.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
+// ⚠️ IMPORTANTE: O domínio deve ser puro, sem dependências externas.
+// Não usar anotações de JPA, Spring, Hibernate, Jackson, etc.
+// Aqui usamos Lombok apenas para gerar getters, mas mesmo isso pode ser evitado
+// em projetos mais "puristas" de DDD.
+
 @Getter
 @Setter
 public class Game {

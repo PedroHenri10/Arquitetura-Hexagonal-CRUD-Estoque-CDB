@@ -61,6 +61,33 @@ public class GameUseCase implements GameInputPort {
     }
 
     @Override
+    public List<Game> findByTitleGameContainingIgnoreCase(String titleGame){
+        List<Game> games = gameRepositoryPort.findByTitleGameContainingIgnoreCase(titleGame);
+        if(games.isEmpty()) {
+            throw new ResourceNotFoundException("Game not found");
+        }
+        return games;
+    }
+
+    @Override
+    public List<Game> findByGenreContainingIgnoreCase(String genre){
+        List<Game> games = gameRepositoryPort.findByGenreContainingIgnoreCase(genre);
+        if(games.isEmpty()) {
+            throw new ResourceNotFoundException("Game not found");
+        }
+        return games;
+    }
+
+    @Override
+    public List<Game> findByPlataformContainingIgnoreCase(String plataform){
+        List<Game> games = gameRepositoryPort.findByPlataformContainingIgnoreCase(plataform);
+        if(games.isEmpty()) {
+            throw new ResourceNotFoundException("Game not found");
+        }
+        return games;
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id){
         if(!gameRepositoryPort.existsById(id)){

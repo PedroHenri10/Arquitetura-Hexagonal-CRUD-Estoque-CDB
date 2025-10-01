@@ -3,6 +3,17 @@ package com.cdb.estoque.adapter.output.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * ⚠️ Esta classe representa a ENTIDADE de persistência no banco de dados.
+ * Ela pertence à camada de infraestrutura (adapter/output) e serve apenas para armazenar dados.
+ *
+ * 📌 Observações:
+ * 1. Não deve conter lógica de negócio.
+ * 2. Pode usar anotações do JPA (@Entity, @Table, @Id etc.).
+ * 3. Pode ter getters e setters (ou Lombok) à vontade, porque é só um DTO de persistência.
+ * 4. Deve ser mapeada para o domínio através de um mapper/converter.
+ */
+
 @Entity
 @Table(name = "games")
 public class GameEntity {

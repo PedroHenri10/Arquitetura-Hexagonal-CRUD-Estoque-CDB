@@ -3,14 +3,9 @@ package com.cdb.estoque.adapter.output.persistence;
 import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.port.output.GameRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import com.cdb.estoque.adapter.output.entity.GameEntity;
 import com.cdb.estoque.adapter.output.mapper.GamePersistanceMapper;
-import com.cdb.estoque.core.domain.model.Game;
-import com.cdb.estoque.exception.ResourceNotFoundException;
-import com.cdb.estoque.port.output.GameRepositoryPort;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +47,27 @@ public class GamePersistenceAdapter implements GameRepositoryPort {
         GameEntity entity = mapper.toEntity(game);
         GameEntity updatedEntity = dataGameRepository.save(entity);
         return mapper.toDomain(updatedEntity);
+    }
+
+    @Override
+    public List<Game> findByTitleGameContainingIgnoreCase(String titleGame){
+        List<GameEntity> entities = dataGameRepository.findByTitleGameContainingIgnoreCase(titleGame);
+
+        return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Game> findByGenreContainingIgnoreCase(String genre){
+        List<GameEntity> entities = dataGameRepository.findByGenreContainingIgnoreCase(genre);
+
+        return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Game> findByPlataformContainingIgnoreCase(String plataform){
+        List<GameEntity> entities = dataGameRepository.findByPlataformContainingIgnoreCase(plataform);
+
+        return entities.stream().map(mapper::toDomain).collect(Collectors.toList());
     }
 
     @Override
