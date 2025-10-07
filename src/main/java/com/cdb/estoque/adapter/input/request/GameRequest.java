@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Objects;
 
 
@@ -15,7 +18,10 @@ import java.util.Objects;
  * 📌 Observações:
  *  Pode usar Lombok para reduzir boilerplate (getters, construtores, toString).
  */
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameRequest {
 
     @NotBlank(message = "O título do jogo é obrigatório.")
@@ -37,28 +43,4 @@ public class GameRequest {
     @PositiveOrZero(message = "O estoque não pode ser um número negativo.")
     private Integer stock;
 
-    public GameRequest(String titleGame, String plataform, String genre, Double price, Integer stock) {
-        this.titleGame = titleGame;
-        this.plataform = plataform;
-        this.genre = genre;
-        this.price = price;
-        this.stock = stock;
-    }
-
-    public String getTitleGame() { return titleGame; }
-    public String getPlataform() { return plataform; }
-    public String getGenre() { return genre; }
-    public Double getPrice() { return price; }
-    public Integer getStock() { return stock; }
-
-    @Override
-    public String toString() {
-        return "GameRequest[" +
-                "titleGame='" + titleGame + '\'' +
-                ", plataform='" + plataform + '\'' +
-                ", genre='" + genre + '\'' +
-                ", price=" + price +
-                ", stock=" + stock +
-                ']';
-    }
 }

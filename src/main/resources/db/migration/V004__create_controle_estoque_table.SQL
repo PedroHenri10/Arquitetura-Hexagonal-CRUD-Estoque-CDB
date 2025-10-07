@@ -6,7 +6,7 @@ estoque-novo INT,
 operacao VARCHAR(10) NOT NULL,
 qtd_movimentada INT NOT NULL,
 data_modificacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_game_controle_estoque()
+    CONSTRAINT fk_game_controle_estoque
     FOREIGN KEY(game_id)
     REFERENCES games(id) ON DELETE CASCADE
     );

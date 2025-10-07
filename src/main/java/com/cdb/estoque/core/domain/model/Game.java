@@ -1,6 +1,8 @@
 package com.cdb.estoque.core.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 // ⚠️ IMPORTANTE: O domínio deve ser puro, sem dependências externas.
@@ -8,8 +10,11 @@ import lombok.Setter;
 // Aqui usamos Lombok apenas para gerar getters, mas mesmo isso pode ser evitado
 // em projetos mais "puristas" de DDD.
 
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Game {
     private Long id;
     private String titleGame;
@@ -17,19 +22,6 @@ public class Game {
     private String genre;
     private Double price;
     private Integer stock;
-
-    public Game(){
-
-    }
-
-    public Game(Long id, String titleGame, String plataform, String genre, Double price, Integer stock) {
-        this.id = id;
-        this.titleGame = titleGame;
-        this.plataform = plataform;
-        this.genre = genre;
-        this.price = price;
-        this.stock = stock;
-    }
 
     public void increaseStock(int quantity) {
         if (quantity <= 0) {
