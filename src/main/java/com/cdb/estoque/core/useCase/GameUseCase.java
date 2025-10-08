@@ -5,40 +5,37 @@ import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.port.input.GameInputPort;
 import com.cdb.estoque.port.output.GameRepositoryPort;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
-
-@Service
-@RequiredArgsConstructor
 public class GameUseCase implements GameInputPort {
 
-    @Autowired
     private final GameRepositoryPort gameRepositoryPort;
 
+    public GameUseCase(GameRepositoryPort gameRepositoryPort) {
+        this.gameRepositoryPort = gameRepositoryPort;
+    }
+
     @Override
-    public List<Game> findAll(){
+    public List<Game> findAll() {
         return gameRepositoryPort.findAll();
     }
 
     @Override
-    public Optional<Game> findById(Long id){
+    public Optional<Game> findById(Long id) {
         return gameRepositoryPort.findById(id);
     }
 
     @Override
-    public Game save(Game game){
+    public Game save(Game game) {
         return gameRepositoryPort.save(game);
     }
 
     @Override
-    public Game update(Long id, Game game){
-        gameRepositoryPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game not found"));
-
+    public Game update(Long id, Game game) {
+        gameRepositoryPort.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
         game.setId(id);
         return gameRepositoryPort.save(game);
     }
@@ -46,7 +43,8 @@ public class GameUseCase implements GameInputPort {
     @Override
     @Transactional
     public Game increaseStock(Long id, int quantity) {
-        Game game = gameRepositoryPort.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
+        Game game = gameRepositoryPort.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
         game.increaseStock(quantity);
         return gameRepositoryPort.save(game);
     }
@@ -54,34 +52,34 @@ public class GameUseCase implements GameInputPort {
     @Override
     @Transactional
     public Game decreaseStock(Long id, int quantity) {
-        Game game = gameRepositoryPort.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
+        Game game = gameRepositoryPort.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
         game.decreaseStock(quantity);
         return gameRepositoryPort.save(game);
-
     }
 
     @Override
-    public List<Game> findByTitleGameContainingIgnoreCase(String titleGame){
+    public List<Game> findByTitleGameContainingIgnoreCase(String titleGame) {
         List<Game> games = gameRepositoryPort.findByTitleGameContainingIgnoreCase(titleGame);
-        if(games.isEmpty()) {
+        if (games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }
         return games;
     }
 
     @Override
-    public List<Game> findByGenreContainingIgnoreCase(String genre){
+    public List<Game> findByGenreContainingIgnoreCase(String genre) {
         List<Game> games = gameRepositoryPort.findByGenreContainingIgnoreCase(genre);
-        if(games.isEmpty()) {
+        if (games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }
         return games;
     }
 
     @Override
-    public List<Game> findByPlataformContainingIgnoreCase(String plataform){
+    public List<Game> findByPlataformContainingIgnoreCase(String plataform) {
         List<Game> games = gameRepositoryPort.findByPlataformContainingIgnoreCase(plataform);
-        if(games.isEmpty()) {
+        if (games.isEmpty()) {
             throw new ResourceNotFoundException("Game not found");
         }
         return games;
@@ -89,8 +87,8 @@ public class GameUseCase implements GameInputPort {
 
     @Override
     @Transactional
-    public void deleteById(Long id){
-        if(!gameRepositoryPort.existsById(id)){
+    public void deleteById(Long id) {
+        if (!gameRepositoryPort.existsById(id)) {
             throw new ResourceNotFoundException("Game not found");
         }
         gameRepositoryPort.deleteById(id);
