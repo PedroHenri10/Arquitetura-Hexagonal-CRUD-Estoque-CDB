@@ -1,46 +1,33 @@
+// src/main/java/com/cdb/estoque/adapter/input/request/GameRequest.java
 package com.cdb.estoque.adapter.input.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.util.Objects;
 
-
-/**
- * DTO (Data Transfer Object) de entrada para criação ou atualização de Game.
- *
- * 📌 Observações:
- *  Pode usar Lombok para reduzir boilerplate (getters, construtores, toString).
- */
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Representa os dados de entrada para criação ou atualização de um game.")
 public class GameRequest {
-
-    @NotBlank(message = "O título do jogo é obrigatório.")
-    @Size(min = 2, max = 100, message = "O título deve ter entre 2 e 100 caracteres.")
+    @Schema(description = "Título do game", example = "Rocket League", required = true)
     private String titleGame;
 
-    @NotBlank(message = "A plataforma é obrigatória.")
-    @Size(max = 50, message = "A plataforma não deve exceder 50 caracteres.")
+    @Schema(description = "Plataforma do game", example = "PC", required = true)
     private String plataform;
 
-    @Size(max = 50, message = "O gênero não deve exceder 50 caracteres.")
+    @Schema(description = "Gênero do game", example = "Esporte")
     private String genre;
 
-    @NotNull(message = "O preço é obrigatório.")
-    @Positive(message = "O preço deve ser um valor positivo.")
+    @Schema(description = "Preço do game", example = "199.99", required = true)
     private Double price;
 
-    @NotNull(message = "O estoque é obrigatório.")
-    @PositiveOrZero(message = "O estoque não pode ser um número negativo.")
+    @Schema(description = "Quantidade em estoque", example = "25", required = true)
     private Integer stock;
-
 }
