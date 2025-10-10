@@ -13,10 +13,21 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Representa os dados de um game retornado pela API.")
 public class GameResponse {
 
-    @Schema(description = "ID do game", example = "1") Long id,
-    @Schema(description = "Título do game", example = "Eocket League") String titleGame,
-    @Schema(description = "Plataforma do game", example = "PC") String plataform,
-    @Schema(description = "Gênero do game", example = "Esporte") String genre,
-    @Schema(description = "Preço do game", example = "199.99") Double price,
-    @Schema(description = "Quantidade em estoque", example = "25") Integer stock
+    @Schema(description = "ID do game", example = "1")
+    private Long id;
+
+    @Schema(description = "Título do game", example = "Rocket League")
+    private String titleGame;
+
+    @Schema(description = "Plataforma do game", example = "PC")
+    private String plataform;
+
+    @Schema(description = "Gênero do game", example = "Esporte")
+    private String genre;
+
+    @Schema(description = "Preço do game", example = "199.99")
+    private Double price;
+
+    @Schema(description = "Quantidade em estoque", example = "25")
+    private Integer stock;
 }
