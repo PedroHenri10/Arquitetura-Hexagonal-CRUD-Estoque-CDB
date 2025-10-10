@@ -1,4 +1,3 @@
-// src/main/java/com/cdb/estoque/adapter/input/request/GameRequest.java
 package com.cdb.estoque.adapter.input.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;

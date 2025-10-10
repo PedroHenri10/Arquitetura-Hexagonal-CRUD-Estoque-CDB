@@ -13,21 +13,21 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Representa os dados de um game retornado pela API.")
 public class GameResponse {
 
-    @Schema(description = "ID do game", example = "1")
+    @Schema(description = "Identificador único do game.", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Schema(description = "Título do game", example = "Rocket League")
+    @Schema(description = "Título completo do jogo.", example = "God of War Ragnarök")
     private String titleGame;
 
-    @Schema(description = "Plataforma do game", example = "PC")
+    @Schema(description = "Plataforma na qual o jogo está disponível.", example = "PlayStation 5")
     private String plataform;
 
-    @Schema(description = "Gênero do game", example = "Esporte")
+    @Schema(description = "Gênero do jogo (ex: RPG, Ação, Aventura).", example = "Ação Aventura")
     private String genre;
 
-    @Schema(description = "Preço do game", example = "199.99")
+    @Schema(description = "Preço de venda do jogo.", example = "299.90")
     private Double price;
 
-    @Schema(description = "Quantidade em estoque", example = "25")
+    @Schema(description = "Quantidade atual do game em estoque.", example = "12")
     private Integer stock;
 }
