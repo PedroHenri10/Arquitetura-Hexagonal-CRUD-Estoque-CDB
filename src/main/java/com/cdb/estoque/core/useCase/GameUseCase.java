@@ -1,4 +1,4 @@
-    package com.cdb.estoque.core.useCase;
+package com.cdb.estoque.core.useCase;
 
 import com.cdb.estoque.core.domain.model.Game;
 import com.cdb.estoque.core.domain.strategy.DecreaseStockOperation;
@@ -53,7 +53,7 @@ public class GameUseCase implements GameInputPort {
     public Game increaseStock(Long id, int quantity) {
         Game game = gameRepositoryPort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
-        increaseStockOperation.execute(game, quantity); 
+        increaseStockOperation.execute(game, quantity);
         return gameRepositoryPort.save(game);
     }
 
@@ -62,7 +62,7 @@ public class GameUseCase implements GameInputPort {
     public Game decreaseStock(Long id, int quantity) {
         Game game = gameRepositoryPort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
-        decreaseStockOperation.execute(game, quantity); 
+        decreaseStockOperation.execute(game, quantity);
         return gameRepositoryPort.save(game);
     }
 
@@ -70,7 +70,7 @@ public class GameUseCase implements GameInputPort {
     public List<Game> findByTitleGameContainingIgnoreCase(String titleGame) {
         List<Game> games = gameRepositoryPort.findByTitleGameContainingIgnoreCase(titleGame);
         if (games.isEmpty()) {
-            throw new ResourceNotFoundException("Game not found");
+            throw new ResourceNotFoundException("Game not found for title: " + titleGame);
         }
         return games;
     }
@@ -79,7 +79,7 @@ public class GameUseCase implements GameInputPort {
     public List<Game> findByGenreContainingIgnoreCase(String genre) {
         List<Game> games = gameRepositoryPort.findByGenreContainingIgnoreCase(genre);
         if (games.isEmpty()) {
-            throw new ResourceNotFoundException("Game not found");
+            throw new ResourceNotFoundException("Game not found for genre: " + genre);
         }
         return games;
     }
@@ -88,7 +88,7 @@ public class GameUseCase implements GameInputPort {
     public List<Game> findByPlataformContainingIgnoreCase(String plataform) {
         List<Game> games = gameRepositoryPort.findByPlataformContainingIgnoreCase(plataform);
         if (games.isEmpty()) {
-            throw new ResourceNotFoundException("Game not found");
+            throw new ResourceNotFoundException("Game not found for plataform: " + plataform);
         }
         return games;
     }
@@ -97,7 +97,7 @@ public class GameUseCase implements GameInputPort {
     @Transactional
     public void deleteById(Long id) {
         if (!gameRepositoryPort.existsById(id)) {
-            throw new ResourceNotFoundException("Game not found");
+            throw new ResourceNotFoundException("Game not found with ID: " + id);
         }
         gameRepositoryPort.deleteById(id);
     }
