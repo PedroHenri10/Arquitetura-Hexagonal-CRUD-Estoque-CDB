@@ -23,22 +23,23 @@ public class Game {
     private Double price;
     private Integer stock;
 
-    public void increaseStock(int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
-        this.stock += quantity;
-    }
+    // mudando lógica para strategy
+    //public void increaseStock(int quantity) {
+       // if (quantity <= 0) {
+           // throw new IllegalArgumentException("Quantity must be positive");
+      //  }
+      //  this.stock += quantity;
+  //  }
 
-    public void decreaseStock(int quantity){
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
+ //   public void decreaseStock(int quantity){
+  //      if (quantity <= 0) {
+      //      throw new IllegalArgumentException("Quantity must be positive");
+     //   }
 
-        if(this.stock < quantity){
-            throw new IllegalArgumentException("Not enough stock for the game");
-        }
-        this.stock -= quantity;
-    }
+     //   if(this.stock < quantity){
+            //throw new IllegalArgumentException("Not enough stock for the game");
+   //     }
+     //   this.stock -= quantity;
+ //   }
 
 }
