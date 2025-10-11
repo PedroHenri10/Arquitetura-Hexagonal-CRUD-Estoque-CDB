@@ -1,6 +1,5 @@
 package com.cdb.estoque.infrastructure;
 
-import com.cdb.estoque.core.domain.factory.GameFactory;
 import com.cdb.estoque.core.domain.strategy.DecreaseStockOperation;
 import com.cdb.estoque.core.domain.strategy.IncreaseStockOperation;
 import com.cdb.estoque.core.useCase.GameUseCase;
