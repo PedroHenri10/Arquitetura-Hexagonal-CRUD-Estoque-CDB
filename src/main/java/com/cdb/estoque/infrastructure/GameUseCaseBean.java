@@ -15,9 +15,8 @@ public class GameUseCaseBean {
     @Bean
     public GameInputPort gameInputPort(GameRepositoryPort gameRepositoryPort,
                                        IncreaseStockOperation increaseStockOperation,
-                                       DecreaseStockOperation decreaseStockOperation,
-                                       GameFactory gameFactory) {
-        return new GameUseCase(gameRepositoryPort, increaseStockOperation, decreaseStockOperation, gameFactory);
+                                       DecreaseStockOperation decreaseStockOperation) {
+        return new GameUseCase(gameRepositoryPort, increaseStockOperation, decreaseStockOperation);
     }
 
     @Bean
@@ -30,8 +29,4 @@ public class GameUseCaseBean {
         return new DecreaseStockOperation();
     }
 
-    @Bean
-    public GameFactory gameFactory() { 
-        return new GameFactory();
-    }
 }
