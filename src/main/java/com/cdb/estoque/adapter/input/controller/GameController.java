@@ -1,5 +1,6 @@
 package com.cdb.estoque.adapter.input.controller;
 
+import com.cdb.estoque.adapter.input.controller.api.GameControllerDoc;
 import com.cdb.estoque.adapter.input.mapper.GameRestMapper;
 import com.cdb.estoque.adapter.input.request.GameRequest;
 import com.cdb.estoque.adapter.input.response.GameResponse;
@@ -18,23 +19,26 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/games")
 @RequiredArgsConstructor
-public class GameController {
+public class GameController implements GameControllerDoc{
 
     private final GameInputPort gameInputPort;
     private final GameRestMapper mapper;
 
+    @Override
     @GetMapping
     public ResponseEntity<List<GameResponse>> findAll(){
         List<GameResponse> allGames = gameInputPort.findAll().stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(allGames);
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<GameResponse> findById(@PathVariable Long id) {
         Game game = gameInputPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("GAME NOT FOUND"));
         return ResponseEntity.ok(mapper.toResponse(game));
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<GameResponse> createGame(@Valid @RequestBody GameRequest request) {
        Game toSave = mapper.toDomain(request);
@@ -42,6 +46,7 @@ public class GameController {
         return ResponseEntity.created(URI.create("/games/" + saved.getId())).body(mapper.toResponse(saved));
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<GameResponse> update(@PathVariable Long id, @Valid @RequestBody GameRequest request) {
         Game toUpdate = mapper.toDomain(request);
@@ -49,36 +54,42 @@ public class GameController {
         return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
+    @Override
     @PatchMapping("/{id}/increase-stock")
     public ResponseEntity<GameResponse> increaseStock(@PathVariable Long id, @RequestParam int quantity) {
         Game updatedGame = gameInputPort.increaseStock(id, quantity);
         return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
+    @Override
     @PatchMapping("/{id}/decrease-stock")
     public ResponseEntity<GameResponse> decreaseStock(@PathVariable Long id, @RequestParam int quantity) {
         Game updatedGame = gameInputPort.decreaseStock(id, quantity);
         return ResponseEntity.ok(mapper.toResponse(updatedGame));
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         gameInputPort.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @GetMapping("/search/title")
     public ResponseEntity<List<GameResponse>> findByTitleGameContainingIgnoreCase(@RequestParam String titleGame){
         List<GameResponse> games = gameInputPort.findByTitleGameContainingIgnoreCase(titleGame).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 
+    @Override
     @GetMapping("/search/genre")
     public ResponseEntity<List<GameResponse>> findByGenreContainingIgnoreCase(@RequestParam String genre){
         List<GameResponse> games = gameInputPort.findByGenreContainingIgnoreCase(genre).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(games);
     }
 
+    @Override
     @GetMapping("/search/plataform")
     public ResponseEntity<List<GameResponse>> findByPlataformContainingIgnoreCase(@RequestParam String plataform){
         List<GameResponse> games = gameInputPort.findByPlataformContainingIgnoreCase(plataform).stream().map(mapper::toResponse).collect(Collectors.toList());
