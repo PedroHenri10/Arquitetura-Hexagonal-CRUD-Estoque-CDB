@@ -1,6 +1,8 @@
-package com.cdb.estoque.core.useCase;
+    package com.cdb.estoque.core.useCase;
 
 import com.cdb.estoque.core.domain.model.Game;
+import com.cdb.estoque.core.domain.strategy.DecreaseStockOperation;
+import com.cdb.estoque.core.domain.strategy.IncreaseStockOperation;
 import com.cdb.estoque.exception.ResourceNotFoundException;
 import com.cdb.estoque.port.input.GameInputPort;
 import com.cdb.estoque.port.output.GameRepositoryPort;
@@ -12,9 +14,15 @@ import java.util.Optional;
 public class GameUseCase implements GameInputPort {
 
     private final GameRepositoryPort gameRepositoryPort;
+    private final IncreaseStockOperation increaseStockOperation;
+    private final DecreaseStockOperation decreaseStockOperation;
 
-    public GameUseCase(GameRepositoryPort gameRepositoryPort) {
+    public GameUseCase(GameRepositoryPort gameRepositoryPort,
+                       IncreaseStockOperation increaseStockOperation,
+                       DecreaseStockOperation decreaseStockOperation) {
         this.gameRepositoryPort = gameRepositoryPort;
+        this.increaseStockOperation = increaseStockOperation;
+        this.decreaseStockOperation = decreaseStockOperation;
     }
 
     @Override
@@ -45,7 +53,7 @@ public class GameUseCase implements GameInputPort {
     public Game increaseStock(Long id, int quantity) {
         Game game = gameRepositoryPort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
-        game.increaseStock(quantity);
+        increaseStockOperation.execute(game, quantity); 
         return gameRepositoryPort.save(game);
     }
 
@@ -54,7 +62,7 @@ public class GameUseCase implements GameInputPort {
     public Game decreaseStock(Long id, int quantity) {
         Game game = gameRepositoryPort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
-        game.decreaseStock(quantity);
+        decreaseStockOperation.execute(game, quantity); 
         return gameRepositoryPort.save(game);
     }
 
