@@ -1,10 +1,11 @@
-CREATE OR REPLACE FUNCTION jogos_estoque_baixo(p_min INT)
-RETURNS TABLE (id BIGINT, titleGame TEXT, stock INT) AS $$
+DELIMITER $$
+CREATE FUNCTION jogos_estoque_baixo(p_min INT)
+RETURNS TABLE (id BIGINT, titleGame TEXT, stock INT)
 BEGIN
-    RETURN QUERY
-    SELECT g.id, g."titleGame", g.stock
+    RETURN
+    SELECT g.id, g.titleGame, g.stock
     FROM games g
     WHERE g.stock < p_min
     ORDER BY g.stock ASC;
-END;
-$$ LANGUAGE plpgsql;
+END $$
+DELIMITER;
