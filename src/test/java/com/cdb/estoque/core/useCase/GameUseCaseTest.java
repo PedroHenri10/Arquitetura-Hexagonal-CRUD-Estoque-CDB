@@ -178,7 +178,7 @@ class GameUseCaseTest {
         verify(gameRepositoryPort).findByGenreContainingIgnoreCase(genero);
 
     }
-//
+
     @Test
     void buscarPorGenero_lancaExcecaoQuandoNaoEncontrado() {
         String genero ="Drama";
@@ -188,8 +188,7 @@ class GameUseCaseTest {
 
         assertThatThrownBy(() -> gameUseCase.findByGenreContainingIgnoreCase(genero))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("Game not found");
-
+                .hasMessage("Game not found for genre: " + genero);
 
         verify(gameRepositoryPort).findByGenreContainingIgnoreCase(genero);
     }
