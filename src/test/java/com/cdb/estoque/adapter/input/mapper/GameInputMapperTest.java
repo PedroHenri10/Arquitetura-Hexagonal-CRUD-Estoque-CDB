@@ -29,12 +29,12 @@ class GameInputMapperTest {
         Game game = new Game(1L, "Jogo Teste", "PC", "Ação", 150.0, 10);
         GameResponse response = mapper.toResponse(game);
 
-        assertEquals(game.getId(), response.id());
-        assertEquals(game.getTitleGame(), response.titleGame());
-        assertEquals(game.getPlataform(), response.plataform());
-        assertEquals(game.getGenre(), response.genre());
-        assertEquals(game.getPrice(), response.price());
-        assertEquals(game.getStock(), response.stock());
+        assertEquals(game.getId(), response.getId());
+        assertEquals(game.getTitleGame(), response.getTitleGame());
+        assertEquals(game.getPlataform(), response.getPlataform());
+        assertEquals(game.getGenre(), response.getGenre());
+        assertEquals(game.getPrice(), response.getPrice());
+        assertEquals(game.getStock(), response.getStock());
     }
 
     @Test
