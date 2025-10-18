@@ -269,5 +269,69 @@ class GameUseCaseTest {
         assertEquals("Jogo 3", resultado.get(2).getTitleGame());
         verify(gameRepositoryPort).findAll();
     }
-    
+    //
+
+    @Test
+    void aumentarEstoque_deveIncrementarValorCorretamente() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+        when(gameRepositoryPort.save(any(Game.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        doAnswer(invocation -> {
+            Game g = invocation.getArgument(0);
+            int q = invocation.getArgument(1);
+            g.setStock(g.getStock() + q);
+            return null;
+        }).when(increaseStockOperation).execute(any(Game.class), eq(5));
+
+        Game result = gameUseCase.increaseStock(id, 5);
+
+        assertNotNull(result);
+        assertEquals(15, result.getStock());
+
+        verify(gameRepositoryPort).findById(id);
+        verify(increaseStockOperation).execute(game, 5);
+        verify(gameRepositoryPort).save(game);
+    }
+
+    @Test
+    void aumentarEstoque_deveLancarExcecaoQuandoValorZero() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+
+        doThrow(new IllegalArgumentException("Quantity must be positive"))
+                .when(increaseStockOperation).execute(any(Game.class), eq(0));
+
+        assertThatThrownBy(() -> gameUseCase.increaseStock(id, 0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Quantity must be positive");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(increaseStockOperation).execute(game, 0);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
+    @Test
+    void aumentarEstoque_deveLancarExcecaoQuandoValorNegativo() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+
+        doThrow(new IllegalArgumentException("Quantity must be positive"))
+                .when(increaseStockOperation).execute(any(Game.class), eq(-5));
+
+        assertThatThrownBy(() -> gameUseCase.increaseStock(id, -5))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Quantity must be positive");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(increaseStockOperation).execute(game, -5);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
 }
