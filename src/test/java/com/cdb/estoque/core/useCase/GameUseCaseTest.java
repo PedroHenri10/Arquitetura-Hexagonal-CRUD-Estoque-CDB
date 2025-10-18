@@ -416,5 +416,33 @@ class GameUseCaseTest {
         verify(gameRepositoryPort, never()).save(any(Game.class));
     }
 
-    
+    @Test
+    void buscarPorTitulo_lancaExcecaoQuandoNaoEncontrado() {
+        String titulo = "Inexistente";
+
+        when(gameRepositoryPort.findByTitleGameContainingIgnoreCase(titulo))
+                .thenReturn(Collections.emptyList());
+
+        assertThatThrownBy(() -> gameUseCase.findByTitleGameContainingIgnoreCase(titulo))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Game not found for title: Inexistente");
+
+        verify(gameRepositoryPort).findByTitleGameContainingIgnoreCase(titulo);
+    }
+
+    @Test
+    void buscarPorPlataformaInexistente_lancaExcecao() {
+        String plataforma = "PC";
+
+        when(gameRepositoryPort.findByPlataformContainingIgnoreCase(plataforma))
+                .thenReturn(Collections.emptyList());
+
+        assertThatThrownBy(() -> gameUseCase.findByPlataformContainingIgnoreCase(plataforma))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Game not found for plataform: " + plataforma);
+
+        verify(gameRepositoryPort).findByPlataformContainingIgnoreCase(plataforma);
+    }
+
+   
 }
