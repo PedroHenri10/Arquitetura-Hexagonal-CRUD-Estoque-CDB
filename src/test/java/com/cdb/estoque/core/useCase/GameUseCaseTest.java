@@ -444,5 +444,63 @@ class GameUseCaseTest {
         verify(gameRepositoryPort).findByPlataformContainingIgnoreCase(plataforma);
     }
 
-   
+    @Test
+    void deletarJogo_lancaExcecaoQuandoNaoEncontrado() {
+        Long id = 1L;
+
+        when(gameRepositoryPort.existsById(id)).thenReturn(false);
+
+        assertThatThrownBy(() -> gameUseCase.deleteById(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Game not found with ID: " + id);
+
+        verify(gameRepositoryPort).existsById(id);
+        verify(gameRepositoryPort, never()).deleteById(anyLong());
+    }
+
+    @Test
+    void aumentarEstoque_quandoJogoSemEstoque_deveIncrementar() {
+        Game semEstoque = GameFactoryBot.createGameOutOfStock();
+        Long id = 1L;
+        int quantity = 5;
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(semEstoque));
+        when(gameRepositoryPort.save(any(Game.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        doAnswer(invocation -> {
+            Game g = invocation.getArgument(0);
+            int q = invocation.getArgument(1);
+            g.setStock(g.getStock() + q);
+            return null;
+        }).when(increaseStockOperation).execute(any(Game.class), eq(quantity));
+
+        Game resultado = gameUseCase.increaseStock(id, quantity);
+
+        assertNotNull(resultado);
+        assertEquals(5, resultado.getStock());
+        verify(gameRepositoryPort).findById(id);
+        verify(increaseStockOperation).execute(semEstoque, quantity);
+        verify(gameRepositoryPort).save(semEstoque);
+    }
+
+    @Test
+    void diminuirEstoque_quandoJogoComEstoqueNegativo_deveLancarExcecao() {
+        Game estoqueNegativo = GameFactoryBot.createGameWithNegativeStock();
+        Long id = 1L;
+        int quantity = 1;
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(estoqueNegativo));
+
+        doThrow(new IllegalArgumentException("Not enough stock for the game"))
+                .when(decreaseStockOperation).execute(any(Game.class), eq(quantity));
+
+        assertThatThrownBy(() -> gameUseCase.decreaseStock(id, quantity))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Not enough stock for the game");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(decreaseStockOperation).execute(estoqueNegativo, quantity);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
 }
