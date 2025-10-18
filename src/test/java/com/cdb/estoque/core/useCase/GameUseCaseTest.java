@@ -334,4 +334,87 @@ class GameUseCaseTest {
         verify(gameRepositoryPort, never()).save(any(Game.class));
     }
 
+    @Test
+    void diminuirEstoque_deveDiminuirCorretamente() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+        when(gameRepositoryPort.save(any(Game.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        doAnswer(invocation -> {
+            Game g = invocation.getArgument(0);
+            int q = invocation.getArgument(1);
+            g.setStock(g.getStock() - q);
+            return null;
+        }).when(decreaseStockOperation).execute(any(Game.class), eq(3));
+
+        Game result = gameUseCase.decreaseStock(id, 3);
+
+        assertNotNull(result);
+        assertEquals(7, result.getStock());
+
+        verify(gameRepositoryPort).findById(id);
+        verify(decreaseStockOperation).execute(game, 3);
+        verify(gameRepositoryPort).save(game);
+    }
+
+    @Test
+    void diminuirEstoque_deveLancarExcecaoQuandoQuantidadeForZero() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+
+        doThrow(new IllegalArgumentException("Quantity must be positive"))
+                .when(decreaseStockOperation).execute(any(Game.class), eq(0));
+
+        assertThatThrownBy(() -> gameUseCase.decreaseStock(id, 0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Quantity must be positive");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(decreaseStockOperation).execute(game, 0);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
+    @Test
+    void diminuirEstoque_deveLancarExcecaoQuandoQuantidadeNegativa() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+
+        doThrow(new IllegalArgumentException("Quantity must be positive"))
+                .when(decreaseStockOperation).execute(any(Game.class), eq(-5));
+
+        assertThatThrownBy(() -> gameUseCase.decreaseStock(id, -5))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Quantity must be positive");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(decreaseStockOperation).execute(game, -5);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
+    @Test
+    void diminuirEstoque_deveLancarExcecaoQuandoQuantidadeMaiorQueEstoque() {
+        Long id = 1L;
+        Game game = GameFactoryBot.createGameWithId(id);
+
+        when(gameRepositoryPort.findById(id)).thenReturn(Optional.of(game));
+
+        doThrow(new IllegalArgumentException("Not enough stock for the game"))
+                .when(decreaseStockOperation).execute(any(Game.class), eq(20));
+
+        assertThatThrownBy(() -> gameUseCase.decreaseStock(id, 20))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Not enough stock for the game");
+
+        verify(gameRepositoryPort).findById(id);
+        verify(decreaseStockOperation).execute(game, 20);
+        verify(gameRepositoryPort, never()).save(any(Game.class));
+    }
+
+    
 }
