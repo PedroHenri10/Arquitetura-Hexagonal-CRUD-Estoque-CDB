@@ -258,4 +258,30 @@ class GameRequestTest {
         Set<ConstraintViolation<GameRequest>> violations = validator.validate(request);
         assertTrue(violations.isEmpty());
     }
+
+    @Test
+    void testLombokMethods() {
+        GameRequest game1 = GameRequest.builder()
+                .titleGame("Elden Ring")
+                .plataform("PC")
+                .genre("RPG")
+                .price(199.90)
+                .stock(10)
+                .build();
+
+        GameRequest game2 = GameRequest.builder()
+                .titleGame("Elden Ring")
+                .plataform("PC")
+                .genre("RPG")
+                .price(199.90)
+                .stock(10)
+                .build();
+
+        assertEquals(game1, game2);
+        assertEquals(game1.hashCode(), game2.hashCode());
+
+        assertNotNull(game1.toString());
+    }
+
+
 }

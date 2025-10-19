@@ -52,9 +52,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findAll();
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for all games.", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for all games.", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Search for all games completed. Total of 1 games found.", listAppender.list.get(1).getMessage());
+        assertEquals("Search for all games completed. Total of 1 games found.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -71,9 +71,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findById(id);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for game with ID: 1", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for game with ID: 1", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Game with ID 1 found: Zelda", listAppender.list.get(1).getMessage());
+        assertEquals("Game with ID 1 found: Zelda", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -88,9 +88,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findById(id);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for game with ID: 99", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for game with ID: 99", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Game with ID 99 not found.", listAppender.list.get(1).getMessage());
+        assertEquals("Game with ID 99 not found.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.WARN, listAppender.list.get(1).getLevel());
     }
 
@@ -106,9 +106,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).save(gameToSave);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting to save game: Jogo Teste", listAppender.list.get(0).getMessage());
+        assertEquals("Starting to save game: Jogo Teste", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Game saved successfully. ID: 1", listAppender.list.get(1).getMessage());
+        assertEquals("Game saved successfully. ID: 1", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -125,9 +125,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).update(id, gameToUpdate);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting update for game with ID: 1", listAppender.list.get(0).getMessage());
+        assertEquals("Starting update for game with ID: 1", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Game with ID 1 updated successfully.", listAppender.list.get(1).getMessage());
+        assertEquals("Game with ID 1 updated successfully.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -145,9 +145,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).increaseStock(id, quantity);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting stock increase for game ID: 1 with quantity: 5", listAppender.list.get(0).getMessage());
+        assertEquals("Starting stock increase for game ID: 1 with quantity: 5", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Stock for game ID 1 increased to: 15", listAppender.list.get(1).getMessage());
+        assertEquals("Stock for game ID 1 increased to: 15", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -165,9 +165,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).decreaseStock(id, quantity);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting stock decrease for game ID: 1 with quantity: 3", listAppender.list.get(0).getMessage());
+        assertEquals("Starting stock decrease for game ID: 1 with quantity: 3", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Stock for game ID 1 decreased to: 7", listAppender.list.get(1).getMessage());
+        assertEquals("Stock for game ID 1 decreased to: 7", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -183,9 +183,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findByTitleGameContainingIgnoreCase(title);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for games with title containing: zelda", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for games with title containing: zelda", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Search by title 'zelda' completed. Total of 1 games found.", listAppender.list.get(1).getMessage());
+        assertEquals("Search by title 'zelda' completed. Total of 1 games found.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -201,9 +201,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findByGenreContainingIgnoreCase(genre);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for games with genre containing: adventure", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for games with genre containing: adventure", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Search by genre 'adventure' completed. Total of 1 games found.", listAppender.list.get(1).getMessage());
+        assertEquals("Search by genre 'adventure' completed. Total of 1 games found.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -219,9 +219,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).findByPlataformContainingIgnoreCase(plataform);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting search for games with platform containing: switch", listAppender.list.get(0).getMessage());
+        assertEquals("Starting search for games with platform containing: switch", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Search by platform 'switch' completed. Total of 1 games found.", listAppender.list.get(1).getMessage());
+        assertEquals("Search by platform 'switch' completed. Total of 1 games found.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 
@@ -235,9 +235,9 @@ class LoggingGameUseCaseDecoratorTest {
         verify(decoratedGameUseCase, times(1)).deleteById(id);
 
         assertEquals(2, listAppender.list.size());
-        assertEquals("Starting deletion of game with ID: 1", listAppender.list.get(0).getMessage());
+        assertEquals("Starting deletion of game with ID: 1", listAppender.list.get(0).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(0).getLevel());
-        assertEquals("Game with ID 1 deleted successfully.", listAppender.list.get(1).getMessage());
+        assertEquals("Game with ID 1 deleted successfully.", listAppender.list.get(1).getFormattedMessage()); // Corrigido aqui
         assertEquals(Level.INFO, listAppender.list.get(1).getLevel());
     }
 }
