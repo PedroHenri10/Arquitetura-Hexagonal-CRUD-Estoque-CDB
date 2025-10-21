@@ -1,21 +1,20 @@
-create or replace procedure registrar_venda(v_id INT, v_qtd INT)
-AS $$
-DECLARE
-    g_QTD INT;
+DELIMITER $$
+CREATE PROCEDURE registrar_venda(IN v_id INT, IN v_qtd INT)
 BEGIN
-    SELECT quantida INTO g_qtd FROM game WHERE id = v_id;
+    DECLARE g_qtd INT;
 
-    if g_qtd IS NULL THEN
-        RAISE EXCEPTION "Game not found";
-    end if;
+    SELECT stock INTO g_qtd FROM games WHERE id = v_id;
 
-    if g_qtd < v_qtd then
-        RAISE EXCEPTION "ESTOQUE INSUUFIIENTE"
+    IF g_qtd IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Game não encontrado!';
     END IF;
 
-        UPDATE game
-        SET quantidade = quantidade - g_qtd
-        WHERE id = v_qtd;
-    END;
+    IF g_qtd < v_qtd THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estoque insuficiente!';
+    END IF;
 
-    $$ LANGUAGE plpgsql;
+    UPDATE games
+    SET stock = stock - v_qtd
+    WHERE id = v_id;
+END$$
+DELIMITER ;
