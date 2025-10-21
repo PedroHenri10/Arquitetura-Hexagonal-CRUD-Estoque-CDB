@@ -1,21 +1,18 @@
-CREATE OR REPLACE FUNCTION
-calcular_total_game(p_id INT, p_qtd INT){
-    RETURNS NUMERIC AS $$
-    DECLARE
-    preco NUMERIC;
-    cal_total NUMERIC;
-    BEGIN
-    SELECT preco INTO preco
-    FROM game
-    WHERE id = p_id;
+DELIMITER $$
+CREATE FUNCTION calcular_total_game(p_id INT, p_qtd INT)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+    DECLARE preco DECIMAL(10,2);
+    DECLARE cal_total DECIMAL(10,2);
+
+    SELECT preco INTO preco FROM games WHERE id = p_id;
 
     IF preco IS NULL THEN
-        RAISE EXCEPTION  'Game not found!';
-        END IF;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Game não encontrado!';
+    END IF;
 
-        cal_total = preco * p_qtd;
-
-        RETURN cal_total;
-        END;
-        $$ LANGUAGE plpgsql;
-}
+    SET cal_total = preco * p_qtd;
+    RETURN cal_total;
+END$$
+DELIMITER ;
