@@ -1,16 +1,18 @@
-CREATE OR REPLACE FUNCTION esta_abaixo_minimo(p_id INT, p_min INT)
-RETURNS BOOLEAN AS $$
-DECLARE
-    v_stock INT;
+DELIMITER $$
+CREATE FUNCTION esta_abaixo_minimo(p_id INT, p_min INT)
+RETURNS BOOLEAN
+DETERMINISTIC
 BEGIN
+    DECLARE v_stock INT;
+
     SELECT stock INTO v_stock
     FROM games
     WHERE id = p_id;
 
     IF v_stock IS NULL THEN
-        RAISE EXCEPTION 'Game não encontrado com id %', p_id;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = CONCAT('Game não encontrado com id ', p_id);
     END IF;
 
     RETURN v_stock < p_min;
-END;
-$$ LANGUAGE plpgsql;
+END$$
+DELIMITER ;
