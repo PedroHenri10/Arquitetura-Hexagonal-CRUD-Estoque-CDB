@@ -1,24 +1,22 @@
-CREATE OR REPLACE FUNCTION mudanca_de_estoque()
-RETURNS TRIGGER AS $$
-DECLARE
-    mud_operacao VARCHAR(10);
-    mud_qtd_movimentada INT;
+DELIMITER $$
+CREATE TRIGGER trg_mudanca_estoque
+AFTER UPDATE ON games
+FOR EACH ROW
 BEGIN
+    DECLARE mud_operacao VARCHAR(10);
+    DECLARE mud_qtd_movimentada INT;
 
-    IF(TG_OP = "UPDATE" AND NEW.stock <> OLD.stock) THEN
-
-    mud-qtd_movimentada := abs(NEW.stock - OLD.stock);
+    IF NEW.stock <> OLD.stock THEN
+        SET mud_qtd_movimentada = ABS(NEW.stock - OLD.stock);
 
         IF NEW.stock > OLD.stock THEN
-            mud_operacao := 'AUMENTO';
+            SET mud_operacao = 'AUMENTO';
         ELSE
-            MUD_OPERACAO := 'REDUCAO';
+            SET mud_operacao = 'REDUCAO';
         END IF;
 
-        INSERT INTO auditoria_estoque(game_id, estoque_antigo, estoque_novo, operacao, qtd_movimentada)
-        values (OLD.id, OLD.stock, NEW.stock, MUD_operacao, mud_qtd_movimentada);
-        END IF;
-
-        RETURN NEW;
-        END;
-        $$ LANGUAGE plpgsql;
+        INSERT INTO auditoria_estoque (game_id, estoque_antigo, estoque_novo, operacao, qtd_movimentada)
+        VALUES (OLD.id, OLD.stock, NEW.stock, mud_operacao, mud_qtd_movimentada);
+    END IF;
+END$$
+DELIMITER ;
