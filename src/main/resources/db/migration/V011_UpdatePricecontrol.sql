@@ -1,8 +1,8 @@
-CREATE OR REPLACE PROCEDURE atualizar_preco(p_id INT, p_novo_preco NUMERIC)
-AS $$
+DELIMITER $$
+CREATE PROCEDURE atualizar_preco(IN p_id INT, IN p_novo_preco DECIMAL(10,2))
 BEGIN
-    UPDATE game
+    UPDATE games
     SET preco = p_novo_preco
     WHERE id = p_id;
-END;
-$$ LANGUAGE plpgsql;
+END$$
+DELIMITER ;

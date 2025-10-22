@@ -1,7 +1,7 @@
-CREATE OR REPLACE PROCEDURE excluir_game(g_id INT)
-AS $$
+DELIMITER $$
+CREATE PROCEDURE excluir_game(IN g_id INT)
 BEGIN
-    DELETE FROM game
+    DELETE FROM games
     WHERE id = g_id;
-END;
-$$ LANGUAGE plpgsql;
+END$$
+DELIMITER ;
