@@ -1,11 +1,12 @@
 DELIMITER $$
 CREATE FUNCTION jogos_estoque_baixo(p_min INT)
-RETURNS TABLE (id BIGINT, titleGame TEXT, stock INT)
+RETURNS TABLE (id BIGINT, titleGame VARCHAR(255), stock INT)
+READS SQL DATA
 BEGIN
     RETURN
     SELECT g.id, g.titleGame, g.stock
     FROM games g
     WHERE g.stock < p_min
     ORDER BY g.stock ASC;
-END $$
-DELIMITER;
+END$$
+DELIMITER ;
